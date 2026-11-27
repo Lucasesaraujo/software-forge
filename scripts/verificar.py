@@ -1,0 +1,143 @@
+#!/usr/bin/env python3
+"""Verifica a consistência do kit da Forja. Sai com código 1 se houver erro."""
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+RAIZ = Path(__file__).resolve().parent.parent
+GLOBAL = RAIZ / "global"
+erros: list[str] = []
+
+
+def erro(msg: str) -> None:
+    erros.append(msg)
+
+
+def frontmatter(caminho: Path) -> dict[str, str]:
+    texto = caminho.read_text(encoding="utf-8")
+    m = re.match(r"^---\n(.*?)\n---\n", texto, re.S)
+    if not m:
+        erro(f"{caminho.relative_to(RAIZ)}: sem frontmatter")
+        return {}
+    campos = {}
+    for linha in m.group(1).splitlines():
+        if ":" in linha:
+            chave, valor = linha.split(":", 1)
+            campos[chave.strip()] = valor.strip().strip('"')
+    return campos
+
+
+def verificar_agentes() -> set[str]:
+    nomes = set()
+    for arq in sorted((GLOBAL / "agentes").glob("*.md")):
+        fm = frontmatter(arq)
+        if fm.get("name") != arq.stem:
+            erro(f"agente {arq.name}: name '{fm.get('name')}' difere do arquivo")
+        for campo in ("description", "tools"):
+            if not fm.get(campo):
+                erro(f"agente {arq.name}: falta '{campo}'")
+        nomes.add(arq.stem)
+    return nomes
+
+
+def verificar_skills() -> set[str]:
+    nomes = set()
+    for pasta in sorted(p for p in (GLOBAL / "skills").iterdir() if p.is_dir()):
+        skill = pasta / "SKILL.md"
+        if not skill.exists():
+            erro(f"skill {pasta.name}: falta SKILL.md")
+            continue
+        fm = frontmatter(skill)
+        if fm.get("name") != pasta.name:
+            erro(f"skill {pasta.name}: name '{fm.get('name')}' difere da pasta")
+        if not fm.get("description"):
+            erro(f"skill {pasta.name}: falta 'description'")
+        nomes.add(pasta.name)
+    return nomes
+
+
+def verificar_templates() -> set[str]:
+    pasta = GLOBAL / "templates"
+    existentes = {p.name for p in pasta.iterdir() if p.is_file() and p.name != "INDICE.md"}
+    indice = (pasta / "INDICE.md").read_text(encoding="utf-8")
+    listados = set(re.findall(r"^\| `([^`]+)` \|", indice, re.M))
+    for nome in sorted(listados - existentes):
+        erro(f"INDICE.md lista template inexistente: {nome}")
+    for nome in sorted(existentes - listados):
+        erro(f"template fora do INDICE.md: {nome}")
+    for nome in existentes:
+        texto = (pasta / nome).read_text(encoding="utf-8")
+        if nome.endswith(".feature"):
+            if not texto.startswith("# language: pt"):
+                erro(f"{nome}: .feature deve começar com '# language: pt'")
+        elif not texto.startswith("# "):
+            erro(f"{nome}: template deve começar com um título '# '")
+    return existentes
+
+
+def verificar_referencias(agentes: set[str], skills: set[str], templates: set[str]) -> None:
+    hefesto = (GLOBAL / ".forja" / "HEFESTO.md").read_text(encoding="utf-8")
+    for nome in sorted(agentes | skills):
+        if f"`{nome}`" not in hefesto:
+            erro(f"HEFESTO.md não menciona `{nome}`")
+    citados = set(re.findall(r"`(forja-[a-z-]+)`", hefesto))
+    for nome in sorted(citados - agentes - skills):
+        erro(f"HEFESTO.md cita `{nome}`, que não existe")
+
+    fontes = list((GLOBAL / "agentes").glob("*.md")) + list((GLOBAL / "skills").glob("*/SKILL.md"))
+    for arq in fontes:
+        texto = arq.read_text(encoding="utf-8")
+        for ref in re.findall(r"\.forja/templates/([\w.-]+\.(?:md|feature))", texto):
+            if ref not in templates and ref != "INDICE.md":
+                erro(f"{arq.relative_to(RAIZ)}: template inexistente {ref}")
+        for ref in re.findall(r"template `([\w.-]+\.(?:md|feature))`", texto):
+            if ref not in templates:
+                erro(f"{arq.relative_to(RAIZ)}: template inexistente {ref}")
+        for ref in re.findall(r"agente `(forja-[a-z-]+)`", texto):
+            if ref not in agentes:
+                erro(f"{arq.relative_to(RAIZ)}: agente inexistente {ref}")
+        for ref in re.findall(r"skill `(forja-[a-z-]+)`", texto):
+            if ref not in skills:
+                erro(f"{arq.relative_to(RAIZ)}: skill inexistente {ref}")
+
+
+def verificar_neutralidade() -> None:
+    """Contexto de projeto não entra no repositório da Forja."""
+    try:
+        rastreados = subprocess.run(
+            ["git", "ls-files"], cwd=RAIZ, capture_output=True, text=True, check=True
+        ).stdout.splitlines()
+    except (OSError, subprocess.CalledProcessError):
+        return
+    for f in rastreados:
+        if f.startswith("projetos/") or Path(f).name == "CLAUDE.local.md":
+            erro(f"arquivo de projeto versionado na Forja: {f}")
+
+
+def verificar_instalador() -> None:
+    r = subprocess.run(["bash", "-n", str(RAIZ / "instalar.sh")], capture_output=True, text=True)
+    if r.returncode:
+        erro(f"instalar.sh com erro de sintaxe: {r.stderr.strip()}")
+    if not re.fullmatch(r"\d+\.\d+\.\d+\n?", (RAIZ / "VERSAO").read_text()):
+        erro("VERSAO deve ser semver (ex.: 0.1.0)")
+
+
+def main() -> int:
+    agentes = verificar_agentes()
+    skills = verificar_skills()
+    templates = verificar_templates()
+    verificar_referencias(agentes, skills, templates)
+    verificar_neutralidade()
+    verificar_instalador()
+    if erros:
+        print(f"{len(erros)} erro(s):")
+        for e in erros:
+            print(f"  - {e}")
+        return 1
+    print(f"ok: {len(agentes)} agentes, {len(skills)} skills, {len(templates)} templates")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

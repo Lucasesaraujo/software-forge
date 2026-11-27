@@ -1,0 +1,39 @@
+# Índice de templates da Forja
+
+Todos usam o exemplo neutro **Portal de Cursos**. Copie, substitua o exemplo e remova os comentários `<!-- -->`.
+
+| Template | Etapa | Destino no projeto |
+|---|---|---|
+| `claude-local.md` | Início | `CLAUDE.local.md` |
+| `acordo-dor.md` | Acordos | `forja/acordos/dor.md` |
+| `acordo-dod.md` | Acordos | `forja/acordos/dod.md` |
+| `status.md` | Toda feature | `forja/features/<F>/status.md` |
+| `adr.md` | DV1 e depois | `forja/arquitetura/adr/ADR-<nnnn>-<slug>.md` |
+| `d1-alinhamento.md` | D1 | `forja/produto/01-alinhamento.md` |
+| `d2-pesquisa.md` | D2 | `forja/produto/02-pesquisa.md` |
+| `d3-sistema-atual.md` | D3 | `forja/produto/03-sistema-atual.md` |
+| `d4-processos.md` | D4 | `forja/produto/04-processos.md` |
+| `d5-requisitos.md` | D5 | `forja/produto/05-requisitos.md` |
+| `d6-backlog.md` | D6 | `forja/produto/06-backlog.md` |
+| `portao-0.md` | Portão 0 | `forja/produto/portao-0.md` |
+| `d7-criterios.md` | D7 | `forja/features/<F>/07-criterios.md` |
+| `d7-cenarios.feature` | D7 | `forja/features/<F>/07-<slug>.feature` |
+| `d8-prototipo.md` | D8 | `forja/features/<F>/08-prototipo.md` |
+| `d9-spec.md` | D9 | `forja/features/<F>/09-spec.md` |
+| `portao-1.md` | Portão 1 | `forja/features/<F>/portao-1.md` |
+| `dv1-arquitetura.md` | DV1 | `forja/arquitetura/01-arquitetura.md` |
+| `dv2-plano.md` | DV2 | `forja/features/<F>/dv2-plano.md` |
+| `dv3-contratos.md` | DV3 | `forja/features/<F>/dv3-contratos.md` |
+| `dv4-testes.md` | DV4 | `forja/features/<F>/dv4-testes.md` |
+| `dv5-pr.md` | DV5 | descrição do PR |
+| `dv6-revisao.md` | DV6, Portão 2 | `forja/features/<F>/dv6-revisao.md` |
+| `dv7-integracao.md` | DV7 | `forja/features/<F>/dv7-integracao.md` |
+| `du1-qualidade.md` | DU1 | `forja/features/<F>/du1-qualidade.md` |
+| `du2-seguranca.md` | DU2 | `forja/features/<F>/du2-seguranca.md` |
+| `du3-desempenho.md` | DU3 | `forja/features/<F>/du3-desempenho.md` |
+| `du4-operacao.md` | DU4 | `forja/features/<F>/du4-operacao.md` |
+| `du5-homologacao.md` | DU5, Portão 3 | `forja/features/<F>/du5-homologacao.md` |
+| `du6-producao.md` | DU6 | `forja/features/<F>/du6-producao.md` |
+| `du7-aprendizado.md` | DU7 | `forja/features/<F>/du7-aprendizado.md` |
+
+Templates previstos para as próximas versões estão em `docs/roadmap.md` do repositório da Forja.
