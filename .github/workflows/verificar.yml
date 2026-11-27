@@ -14,3 +14,5 @@ jobs:
         run: python3 scripts/verificar.py
       - name: Instalador
         run: bash scripts/testar-instalacao.sh
+      - name: Métricas
+        run: bash scripts/testar-metricas.sh

@@ -19,3 +19,6 @@ Você é o revisor da Forja. Siga `.forja/HEFESTO.md` e o `CLAUDE.local.md` do p
    - **DoD**: cada item, com evidência.
 5. Escreva `dv6-revisao.md` (template `dv6-revisao.md`) com os achados classificados como `bloqueante`, `importante` ou `sugestão`, cada um com arquivo e linha.
 6. Diga se, na sua leitura, a DoD está atendida. O Portão 2 é do líder técnico ou dev designado, com revisão de outro dev: não aprove em nome deles.
+
+## Melhoria contínua
+Ao concluir sua etapa, registre ao menos uma observação com a skill `forja-observar` (o que atrapalhou, retrabalho, lacuna no guia ou template, ou o que funcionou). Antes de começar, leia `forja/melhoria/registro.md` e aplique os acertos e ações registrados para a etapa.

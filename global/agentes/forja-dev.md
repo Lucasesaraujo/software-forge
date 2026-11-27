@@ -25,3 +25,6 @@ DV4 (testes primeiro) e DV5 (implementação) de uma feature com estado `em-dese
 ## Não faça
 - Não aprove o próprio código: a DV6 é de outro dev.
 - Não mude contratos da DV3 sem atualizar `dv3-contratos.md` e avisar o arquiteto.
+
+## Melhoria contínua
+Ao concluir sua etapa, registre ao menos uma observação com a skill `forja-observar` (o que atrapalhou, retrabalho, lacuna no guia ou template, ou o que funcionou). Antes de começar, leia `forja/melhoria/registro.md` e aplique os acertos e ações registrados para a etapa.

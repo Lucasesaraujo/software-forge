@@ -12,7 +12,7 @@ global/          Kit instalado em ~/.claude de cada pessoa
   agentes/       Definições de agentes
   skills/        Skills
   templates/     Templates de artefatos (exemplo neutro: Portal de Cursos)
-  .forja/        HEFESTO.md, o método importado pelos projetos
+  .forja/        HEFESTO.md (o método), guias/ de condução e scripts/ (métricas)
 scripts/         Verificação do kit e teste do instalador
 instalar.sh      Instala o kit e liga projetos
 ```
@@ -34,29 +34,38 @@ Depois, dentro do projeto, rode a skill `/forja-iniciar` no Claude Code para pre
 | `global/skills/forja-*/` | `~/.claude/skills/` |
 | `global/.forja/HEFESTO.md` | `~/.claude/.forja/HEFESTO.md` |
 | `global/templates/` | `~/.claude/.forja/templates/` |
+| `global/.forja/guias/` e `scripts/` | `~/.claude/.forja/guias/` e `scripts/` |
 
 ## Agentes e skills
 
 | Agente | Etapas |
 |---|---|
-| `forja-analista` | D1 a D6 |
+| `forja-analista` | D1 a D6 (coordena a descoberta) |
+| `forja-facilitador` | Kickoff, oficinas e atas da descoberta |
+| `forja-pesquisador` | D2: entrevistas e síntese |
 | `forja-especificador` | D7 a D9 |
 | `forja-arquiteto` | DV1 a DV3 |
 | `forja-dev` | DV4 e DV5 (testes primeiro) |
 | `forja-revisor` | DV6 |
 | `forja-durabilidade` | DV7, DU1 a DU4, DU6, DU7 |
 | `forja-portao` | Checagem dos portões (somente leitura) |
+| `forja-melhoria` | Retrospectivas com métricas e propostas de melhoria |
 
-Skills: `forja-iniciar`, `forja-feature`, `forja-status`, `forja-avancar`, `forja-portao`.
+Skills: `forja-iniciar`, `forja-feature`, `forja-status`, `forja-avancar`, `forja-portao`, `forja-registrar-reuniao`, `forja-observar`, `forja-retro`, `forja-incorporar-melhoria`.
+
+## Melhoria contínua
+
+Durante o uso, cada etapa e cada portão deixam observações em `forja/melhoria/registro.md` no projeto. As retrospectivas (`/forja-retro`) cruzam essas observações com as métricas dos históricos (`metricas.py`), geram ações para o projeto e propostas anonimizadas para a Forja, que entram aqui com `/forja-incorporar-melhoria` e viram uma nova versão. Detalhes em [docs/processo-de-melhoria.md](docs/processo-de-melhoria.md).
 
 ## Verificação
 
 ```bash
 python3 scripts/verificar.py        # consistência de agentes, skills, templates e referências
 bash scripts/testar-instalacao.sh   # instalador num ~/.claude temporário
+bash scripts/testar-metricas.sh     # métricas com um projeto de exemplo
 ```
 
-As duas rodam no CI a cada push.
+As três rodam no CI a cada push.
 
 Cada projeto usa a Forja localmente com um `CLAUDE.local.md` que importa o método com `@.forja/HEFESTO.md`, ignorado via `.git/info/exclude` no repositório do projeto.
 
