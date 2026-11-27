@@ -40,6 +40,8 @@ instalar_kit() {
   mkdir -p "$DESTINO/.forja"
   colocar "$ORIGEM/global/.forja/HEFESTO.md" "$DESTINO/.forja/HEFESTO.md"
   colocar "$ORIGEM/global/templates" "$DESTINO/.forja/templates"
+  colocar "$ORIGEM/global/.forja/guias" "$DESTINO/.forja/guias"
+  colocar "$ORIGEM/global/.forja/scripts" "$DESTINO/.forja/scripts"
   cp "$ORIGEM/instalar.sh" "$DESTINO/.forja/instalar.sh"
   cp "$ORIGEM/VERSAO" "$DESTINO/.forja/VERSAO"
 

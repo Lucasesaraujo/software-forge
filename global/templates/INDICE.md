@@ -9,8 +9,18 @@ Todos usam o exemplo neutro **Portal de Cursos**. Copie, substitua o exemplo e r
 | `acordo-dod.md` | Acordos | `forja/acordos/dod.md` |
 | `status.md` | Toda feature | `forja/features/<F>/status.md` |
 | `adr.md` | DV1 e depois | `forja/arquitetura/adr/ADR-<nnnn>-<slug>.md` |
+| `status-produto.md` | Descoberta | `forja/produto/status.md` |
+| `reuniao-ata.md` | Qualquer reunião | `forja/produto/atas/AAAA-MM-DD-<assunto>.md` |
+| `d1-kickoff-pauta.md` | D1 (e outras reuniões) | `forja/produto/00-kickoff-pauta.md` |
+| `d1-partes-interessadas.md` | D1 | `forja/produto/01-partes-interessadas.md` |
+| `d2-roteiro-entrevista.md` | D2 | `forja/produto/02-roteiro-entrevista.md` |
+| `d2-nota-entrevista.md` | D2 | `forja/produto/pesquisa/E-<nn>.md` |
+| `d5-glossario.md` | D5 | `forja/produto/glossario.md` |
+| `melhoria-registro.md` | Melhoria contínua | `forja/melhoria/registro.md` |
+| `melhoria-retro.md` | Melhoria contínua | `forja/melhoria/retros/AAAA-MM-DD-<escopo>.md` |
+| `melhoria-proposta.md` | Melhoria contínua | `forja/melhoria/propostas/PM-<nnn>-<slug>.md` |
 | `d1-alinhamento.md` | D1 | `forja/produto/01-alinhamento.md` |
-| `d2-pesquisa.md` | D2 | `forja/produto/02-pesquisa.md` |
+| `d2-pesquisa.md` | D2 (síntese) | `forja/produto/02-pesquisa.md` |
 | `d3-sistema-atual.md` | D3 | `forja/produto/03-sistema-atual.md` |
 | `d4-processos.md` | D4 | `forja/produto/04-processos.md` |
 | `d5-requisitos.md` | D5 | `forja/produto/05-requisitos.md` |
@@ -36,4 +46,4 @@ Todos usam o exemplo neutro **Portal de Cursos**. Copie, substitua o exemplo e r
 | `du6-producao.md` | DU6 | `forja/features/<F>/du6-producao.md` |
 | `du7-aprendizado.md` | DU7 | `forja/features/<F>/du7-aprendizado.md` |
 
-Templates previstos para as próximas versões estão em `docs/roadmap.md` do repositório da Forja.
+Guias de condução da descoberta: `.forja/guias/`. Templates previstos para as próximas versões estão em `docs/roadmap.md` do repositório da Forja.

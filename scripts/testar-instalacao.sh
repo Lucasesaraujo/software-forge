@@ -16,6 +16,8 @@ for modo in "" --link; do
   [ -f "$CLAUDE_HOME/skills/forja-iniciar/SKILL.md" ] || falha "skill ausente ($modo)"
   [ -f "$CLAUDE_HOME/.forja/templates/status.md" ] || falha "templates ausentes ($modo)"
   [ -x "$CLAUDE_HOME/.forja/instalar.sh" ] || falha "instalador não copiado ($modo)"
+  [ -f "$CLAUDE_HOME/.forja/guias/d1-alinhamento.md" ] || falha "guias ausentes ($modo)"
+  [ -f "$CLAUDE_HOME/.forja/scripts/metricas.py" ] || falha "scripts ausentes ($modo)"
 done
 "$RAIZ/instalar.sh" >/dev/null   # volta para cópia
 [ -L "$CLAUDE_HOME/agents/forja-dev.md" ] && falha "reinstalação em cópia deixou link"

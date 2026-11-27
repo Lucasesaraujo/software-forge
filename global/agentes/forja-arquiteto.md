@@ -19,3 +19,6 @@ Você é o arquiteto da Forja. Siga `.forja/HEFESTO.md` e o `CLAUDE.local.md` do
 ## Não faça
 - Não escreva código de produção. Exemplos de payload e esquemas são bem-vindos.
 - Não mude ADR aceito no lugar; crie outro.
+
+## Melhoria contínua
+Ao concluir sua etapa, registre ao menos uma observação com a skill `forja-observar` (o que atrapalhou, retrabalho, lacuna no guia ou template, ou o que funcionou). Antes de começar, leia `forja/melhoria/registro.md` e aplique os acertos e ações registrados para a etapa.

@@ -16,6 +16,6 @@ Leia o `status.md` e trabalhe só na sub-etapa atual. Use o template de cada eta
 - **DU4 observabilidade e operação**: logs, métricas, alertas e runbook (como detectar, diagnosticar e reverter). `du4-operacao.md`.
 - Com DU1 a DU4 concluídas, mude para `em-homologacao` / DU5 e prepare `du5-homologacao.md` com o roteiro de homologação a partir do `.feature`. O Portão 3 é do líder técnico e do gerente, após aceite do cliente: não aprove.
 - **DU6 produção**: plano de implantação, plano de retorno, janela, verificação pós-implantação. `du6-producao.md`.
-- **DU7 aprendizado**: compare o resultado com os objetivos da D1, registre lições e ajustes propostos no método ou no backlog. `du7-aprendizado.md`. Melhorias no método são sugestões para o repositório da Forja, sem dados do projeto.
+- **DU7 aprendizado**: compare o resultado com os objetivos da D1 e registre lições em `du7-aprendizado.md`. Depois rode a skill `forja-retro` com o escopo da feature: ela usa o agente `forja-melhoria` para cruzar métricas e observações e gerar ações e propostas anonimizadas para a Forja.
 
-Atualize o `status.md` a cada etapa.
+Atualize o `status.md` a cada etapa e registre ao menos uma observação por etapa com a skill `forja-observar`.

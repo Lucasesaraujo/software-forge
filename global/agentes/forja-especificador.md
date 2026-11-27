@@ -21,3 +21,6 @@ Etapas D7, D8 e D9 de uma feature em `forja/features/<id>-<slug>/`.
 ## Não faça
 - Não decida arquitetura, contratos de API ou modelo de dados detalhado (DV1 e DV3).
 - Não altere cenários Gherkin de uma feature que já passou do Portão 1 sem registrar a reabertura no `status.md`.
+
+## Melhoria contínua
+Ao concluir sua etapa, registre ao menos uma observação com a skill `forja-observar` (o que atrapalhou, retrabalho, lacuna no guia ou template, ou o que funcionou). Antes de começar, leia `forja/melhoria/registro.md` e aplique os acertos e ações registrados para a etapa.

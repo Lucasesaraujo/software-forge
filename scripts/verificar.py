@@ -102,6 +102,34 @@ def verificar_referencias(agentes: set[str], skills: set[str], templates: set[st
                 erro(f"{arq.relative_to(RAIZ)}: skill inexistente {ref}")
 
 
+def verificar_guias(templates: set[str], agentes: set[str], skills: set[str]) -> set[str]:
+    pasta = GLOBAL / ".forja" / "guias"
+    guias = {p.name for p in pasta.glob("*.md")}
+    for etapa in ("d1", "d2", "d3", "d4", "d5", "d6"):
+        if not any(g.startswith(etapa + "-") for g in guias):
+            erro(f"falta guia de condução para {etapa.upper()}")
+    for nome in sorted(guias):
+        texto = (pasta / nome).read_text(encoding="utf-8")
+        if "## Checklist de qualidade" not in texto:
+            erro(f"guia {nome}: falta '## Checklist de qualidade'")
+        for ref in re.findall(r"template `([\w.-]+\.(?:md|feature))`", texto):
+            if ref not in templates:
+                erro(f"guia {nome}: template inexistente {ref}")
+        for ref in re.findall(r"`(forja-[a-z-]+)`", texto):
+            if ref not in agentes | skills:
+                erro(f"guia {nome}: cita `{ref}`, que não existe")
+    fontes = list((GLOBAL / "agentes").glob("*.md")) + list((GLOBAL / "skills").glob("*/SKILL.md"))
+    fontes.append(GLOBAL / ".forja" / "HEFESTO.md")
+    for arq in fontes:
+        for ref in re.findall(r"\.forja/guias/([\w.-]+\.md)", arq.read_text(encoding="utf-8")):
+            if ref not in guias:
+                erro(f"{arq.relative_to(RAIZ)}: guia inexistente {ref}")
+    for ref in re.findall(r"\.forja/scripts/([\w.-]+)", "".join(a.read_text(encoding="utf-8") for a in fontes)):
+        if not (GLOBAL / ".forja" / "scripts" / ref).exists():
+            erro(f"script citado e inexistente: .forja/scripts/{ref}")
+    return guias
+
+
 def verificar_neutralidade() -> None:
     """Contexto de projeto não entra no repositório da Forja."""
     try:
@@ -128,6 +156,7 @@ def main() -> int:
     skills = verificar_skills()
     templates = verificar_templates()
     verificar_referencias(agentes, skills, templates)
+    guias = verificar_guias(templates, agentes, skills)
     verificar_neutralidade()
     verificar_instalador()
     if erros:
@@ -135,7 +164,7 @@ def main() -> int:
         for e in erros:
             print(f"  - {e}")
         return 1
-    print(f"ok: {len(agentes)} agentes, {len(skills)} skills, {len(templates)} templates")
+    print(f"ok: {len(agentes)} agentes, {len(skills)} skills, {len(templates)} templates, {len(guias)} guias")
     return 0
 
 

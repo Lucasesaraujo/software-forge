@@ -1,4 +1,4 @@
-# HEFESTO: o método da Forja (v2.1)
+# HEFESTO: o método da Forja (v2.1, kit 0.2)
 
 Este arquivo é importado pelo `CLAUDE.local.md` de cada projeto (`@.forja/HEFESTO.md`). Ele diz como trabalhar; o contexto do projeto (papéis, ADRs, roadmap, onde ficam os artefatos) vem do próprio `CLAUDE.local.md`.
 
@@ -9,7 +9,8 @@ Este arquivo é importado pelo `CLAUDE.local.md` de cada projeto (`@.forja/HEFES
 3. **Portões são decisões humanas.** Agentes preparam evidências e checam critérios; quem aprova é o papel responsável. Nunca marque um portão como aprovado sem o registro explícito da pessoa.
 4. **Papéis, não nomes.** O método fala em papéis. Quem ocupa cada papel está no `CLAUDE.local.md` do projeto.
 5. **Tudo rastreável.** Requisito (RF/RNF/RN) → história → critério de aceite → teste → código → evidência de homologação. Use os identificadores em todos os artefatos.
-6. **O estado mora no `status.md`.** Cada feature tem um `status.md` com estado e sub-etapa atuais e o histórico de transições. Atualize-o a cada mudança.
+6. **O estado mora no `status.md`.** O produto (`forja/produto/status.md`) e cada feature têm um `status.md` com estado e sub-etapa atuais e o histórico de transições. Atualize-o a cada mudança.
+7. **O processo aprende.** Cada etapa deixa ao menos uma observação no registro de melhoria; cada ciclo termina numa retrospectiva baseada nesses dados. O que é do método volta para a Forja como proposta anonimizada.
 
 ## Onde ficam os artefatos
 
@@ -18,12 +19,19 @@ Por padrão, em `forja/` na raiz do projeto (o `CLAUDE.local.md` pode mudar com 
 ```
 forja/
   produto/                 D1 a D6 (nível do produto)
+    status.md              estado, sub-etapa e histórico da descoberta
+    00-kickoff-pauta.md
     01-alinhamento.md
-    02-pesquisa.md
+    01-partes-interessadas.md
+    02-roteiro-entrevista.md
+    02-pesquisa.md         síntese
+    pesquisa/E-<nn>.md     uma nota por entrevista
+    atas/AAAA-MM-DD-*.md   atas de reunião
     03-sistema-atual.md
     04-processos.md
     05-requisitos.md
     06-backlog.md
+    glossario.md
     portao-0.md
   arquitetura/             DV1 e ADRs
     01-arquitetura.md
@@ -50,9 +58,15 @@ forja/
     du5-homologacao.md     (Portão 3)
     du6-producao.md
     du7-aprendizado.md
+  melhoria/                sistema de melhoria do processo
+    registro.md            observações (OBS-nnn), só acrescenta
+    retros/AAAA-MM-DD-*.md retrospectivas
+    propostas/PM-<nnn>-*.md propostas anonimizadas para a Forja
 ```
 
 Os templates de cada artefato ficam em `.forja/templates/` (ver `.forja/templates/INDICE.md`). Copie o template, troque o exemplo do Portal de Cursos pelo conteúdo real e remova as instruções entre `<!-- -->`.
+
+Cada etapa da descoberta tem um **guia de condução** em `.forja/guias/` (`d1-alinhamento.md` a `d6-backlog.md`): como preparar, perguntas-chave, passo a passo, checklist de qualidade e armadilhas. Siga o guia e mostre o checklist preenchido antes de concluir a etapa.
 
 ## Fases e etapas
 
@@ -60,11 +74,11 @@ Os templates de cada artefato ficam em `.forja/templates/` (ver `.forja/template
 
 | Etapa | Objetivo | Artefato | Saída mínima |
 |---|---|---|---|
-| D1 alinhamento e escopo | Problema, objetivos, partes interessadas, limites do escopo | `produto/01-alinhamento.md` | Objetivos mensuráveis e o que está fora do escopo |
-| D2 pesquisa com usuários | Entender quem usa e o que precisa | `produto/02-pesquisa.md` | Personas e dores com evidência |
+| D1 alinhamento e escopo | Kickoff: problema, objetivos, partes interessadas, limites do escopo | `produto/01-alinhamento.md`, `01-partes-interessadas.md`, ata do kickoff | Objetivos mensuráveis, decisores e o que está fora do escopo |
+| D2 pesquisa com usuários | Entender quem usa e o que precisa | `produto/02-roteiro-entrevista.md`, `pesquisa/E-xx.md`, `02-pesquisa.md` | Personas e dores com evidência; suposições da D1 revisitadas |
 | D3 sistema atual e normas | O que existe hoje, integrações, leis e normas aplicáveis | `produto/03-sistema-atual.md` | Inventário e restrições normativas (ex.: LGPD) |
 | D4 processos AS-IS e TO-BE | Como é e como será | `produto/04-processos.md` | Fluxos atual e futuro, com ganhos |
-| D5 requisitos | RF, RNF e RN com prioridade MoSCoW | `produto/05-requisitos.md` | Requisitos identificados (RF-01, RNF-01, RN-01) |
+| D5 requisitos | RF, RNF e RN com prioridade MoSCoW | `produto/05-requisitos.md`, `glossario.md` | Requisitos identificados (RF-01, RNF-01, RN-01) |
 | D6 épicos, histórias e backlog | Quebrar em entregas | `produto/06-backlog.md` | Backlog priorizado. **Portão 0** |
 
 ### Descoberta (por feature: D7 a D9)
@@ -119,6 +133,10 @@ Regras:
 - **Definition of Done (DoD)**: checada no Portão 2.
 - Os textos ficam em `forja/acordos/dor.md` e `forja/acordos/dod.md` (templates `acordo-dor.md` e `acordo-dod.md`). A equipe pode ajustar; o método exige que existam.
 
+## Estados do produto
+
+O `forja/produto/status.md` usa os estados `descoberta` (D1 a D6), `validado` (Portão 0 aprovado; as features seguem pelos próprios `status.md`) e `bloqueado`. As sub-etapas e as regras de transição são as mesmas das features.
+
 ## Estados da feature
 
 Cada estado corresponde a uma faixa de sub-etapas. O `status.md` registra o estado **e** a sub-etapa.
@@ -150,13 +168,16 @@ Transições válidas: sempre para a sub-etapa seguinte, para `bloqueada` (e de 
 
 | Agente | Etapas |
 |---|---|
-| `forja-analista` | D1 a D6 |
+| `forja-analista` | D1 a D6 (coordena a descoberta e é dono dos artefatos) |
+| `forja-facilitador` | Reuniões da descoberta: kickoff, oficinas, validações; pauta e ata |
+| `forja-pesquisador` | D2: roteiro, entrevistas, síntese |
 | `forja-especificador` | D7 a D9 |
 | `forja-arquiteto` | DV1 a DV3 |
 | `forja-dev` | DV4 e DV5 |
 | `forja-revisor` | DV6 |
 | `forja-durabilidade` | DV7, DU1 a DU4, DU6 e DU7 |
 | `forja-portao` | Checagem dos portões 0 a 3 (somente leitura) |
+| `forja-melhoria` | Retrospectivas: cruza métricas e observações e gera ações e propostas |
 
 | Skill | Para quê |
 |---|---|
@@ -165,6 +186,23 @@ Transições válidas: sempre para a sub-etapa seguinte, para `bloqueada` (e de 
 | `forja-status` | Mostrar onde cada feature está e o que falta |
 | `forja-avancar` | Levar uma feature para a próxima sub-etapa, checando a saída mínima |
 | `forja-portao` | Preparar o parecer de um portão e registrar a decisão humana |
+| `forja-registrar-reuniao` | Levar ata, notas ou transcrição de uma reunião ou entrevista para os artefatos |
+| `forja-observar` | Registrar uma observação de processo no registro de melhoria |
+| `forja-retro` | Retrospectiva de iteração, fase, feature ou portão, com métricas |
+| `forja-incorporar-melhoria` | No repositório da Forja: incorporar uma proposta aceita e gerar nova versão |
+
+## Melhoria contínua
+
+O ciclo de melhoria usa os dados que o próprio processo já produz:
+
+1. **Observar**: ao concluir cada etapa, quando um portão decide, e sempre que algo atrapalhar ou funcionar bem, registre uma linha em `forja/melhoria/registro.md` (skill `forja-observar`). Tipos: `atrito`, `retrabalho`, `retorno`, `lacuna`, `acerto`, `ideia`. Cada linha guarda a versão da Forja em uso.
+2. **Medir**: `python3 .forja/scripts/metricas.py forja` lê os históricos dos `status.md` e o registro e calcula dias por etapa, retornos, pulos, bloqueios e observações por tipo, etapa e versão.
+3. **Retrospectiva**: ao fim de cada iteração, depois de cada portão e na DU7 (skill `forja-retro`, agente `forja-melhoria`). Confere se as ações da retro anterior surtiram efeito, encontra padrões (2 ou mais observações do mesmo tipo na mesma etapa, etapas mais longas, retornos de portão) e gera até 3 ações.
+4. **Separar**: o que é do projeto vira ação na retro; o que é do método vira proposta `PM-nnn`, anonimizada.
+5. **Incorporar**: no repositório da Forja, a skill `forja-incorporar-melhoria` aplica a proposta aceita, registra em `docs/melhorias/`, gera nova versão e o `CHANGELOG`.
+6. **Atualizar e comparar**: `./instalar.sh` leva a versão nova aos projetos. Como as observações guardam a versão, a retro seguinte compara antes e depois.
+
+Regras: o registro só cresce (nunca apague linhas; marque "Tratada em"); observação descreve fatos, não culpa pessoas; nada de dado do projeto vai para a Forja.
 
 ## Regras de conduta para o Claude
 
@@ -172,6 +210,7 @@ Transições válidas: sempre para a sub-etapa seguinte, para `bloqueada` (e de 
 - Não produza artefato de uma etapa posterior à sub-etapa atual sem avisar que isso é antecipar trabalho.
 - Não escreva código de produção para feature que não esteja em `em-desenvolvimento` ou depois.
 - Na DV5, nunca pule, desative ou apague testes para ficar verde.
-- Ao terminar uma etapa, atualize o `status.md` (estado, sub-etapa e linha no histórico).
+- Ao terminar uma etapa, atualize o `status.md` (estado, sub-etapa e linha no histórico) e registre ao menos uma observação no registro de melhoria.
+- Antes de começar uma etapa, leia o registro de melhoria e a última retro, e aplique as ações e os acertos que valem para ela.
 - Use os nomes dos papéis; consulte o `CLAUDE.local.md` para saber quem ocupa cada papel.
-- Nada do projeto volta para o repositório da Forja. Melhorias no método são propostas na DU7 e registradas em `docs/` da Forja.
+- Nada do projeto volta para o repositório da Forja. Melhorias no método seguem o ciclo de melhoria contínua acima.

@@ -20,4 +20,7 @@ Argumentos: `$ARGUMENTS`.
 5. Atualize o `status.md` da feature (portões 1 a 3):
    - aprovado: avance para o estado seguinte ao portão;
    - reprovado: volte para a sub-etapa indicada na decisão, com o motivo no histórico.
-6. Sem decisão, termine dizendo quem precisa decidir e o que o parecer recomenda.
+   No Portão 0, atualize `forja/produto/status.md` do mesmo jeito.
+6. Registre a decisão no `forja/melhoria/registro.md` com a skill `forja-observar`: reprovação é `retorno` (impacto `A`), com o motivo; aprovação com condições é `atrito`; aprovação limpa pode ser `acerto`.
+7. Depois de qualquer decisão, sugira a skill `forja-retro` com o escopo do portão (no Portão 0, escopo `descoberta`).
+8. Sem decisão, termine dizendo quem precisa decidir e o que o parecer recomenda.

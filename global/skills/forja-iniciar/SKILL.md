@@ -19,9 +19,15 @@ description: Prepara um projeto para usar a Forja - cria a pasta de artefatos (f
    forja/arquitetura/adr/
    forja/acordos/
    forja/features/
+   forja/produto/atas/
+   forja/produto/pesquisa/
+   forja/melhoria/retros/
+   forja/melhoria/propostas/
    ```
 5. Copie `.forja/templates/acordo-dor.md` para `forja/acordos/dor.md` e `.forja/templates/acordo-dod.md` para `forja/acordos/dod.md`. Diga que a equipe deve revisar os dois acordos.
-6. Copie `.forja/templates/d1-alinhamento.md` para `forja/produto/01-alinhamento.md` como ponto de partida.
-7. Responda com o que foi criado e o próximo passo: "D1 alinhamento e escopo, com o agente `forja-analista`".
+6. Copie `.forja/templates/status-produto.md` para `forja/produto/status.md`, com o nome do produto, estado `descoberta`, sub-etapa `D1`, a versão de `.forja/VERSAO` e a primeira linha do histórico com a data de hoje.
+7. Copie `.forja/templates/melhoria-registro.md` para `forja/melhoria/registro.md` e apague as linhas de exemplo (mantenha o cabeçalho da tabela).
+8. Copie `.forja/templates/d1-alinhamento.md` para `forja/produto/01-alinhamento.md` e `.forja/templates/d1-partes-interessadas.md` para `forja/produto/01-partes-interessadas.md` como ponto de partida.
+9. Responda com o que foi criado e o próximo passo: "preparar o kickoff com o agente `forja-facilitador` (guia `.forja/guias/d1-alinhamento.md`)".
 
 Não faça commit do `CLAUDE.local.md`. A pasta `forja/` pode ser versionada no repositório do projeto, se a equipe quiser.

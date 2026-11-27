@@ -3,7 +3,7 @@
 <!-- Salvar em forja/produto/02-pesquisa.md. -->
 
 ## Método
-5 entrevistas com alunos e 2 com a secretaria (novembro de 2026).
+5 entrevistas com alunos e 2 com a secretaria (novembro de 2026). Roteiro em `02-roteiro-entrevista.md`; notas em `pesquisa/E-01.md` a `E-07.md`.
 
 ## Personas
 | Id | Persona | Contexto | Necessidade principal |
@@ -16,6 +16,11 @@
 |---|---|---|---|
 | DOR-01 | Não sabe se a inscrição foi aceita | PER-01 | 4 de 5 alunos citaram |
 | DOR-02 | Retrabalho ao remanejar alunos de turmas lotadas | PER-02 | Relato e planilha de 2026.2 |
+
+## Suposições da D1 revisitadas
+| Suposição | Situação | Evidência |
+|---|---|---|
+| Alunos querem lista de espera | confirmada | 4 de 5 entrevistas |
 
 ## Achados que mudam o escopo
 - Lista de espera é desejada pelos dois públicos.
