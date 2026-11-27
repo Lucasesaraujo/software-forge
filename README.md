@@ -23,6 +23,8 @@ instalar.sh      Instala o kit e liga projetos
 
 ## Instalação
 
+Requisitos: git, bash (no Windows, o Git Bash), Python 3 (`python3`, `python` ou `py -3`) e um Claude Code recente, que tenha a opção `--agent` (confira com `claude --help`; atualize com `claude update`).
+
 ```bash
 git clone https://github.com/Lucasesaraujo/software-forge.git
 cd software-forge
@@ -30,7 +32,7 @@ cd software-forge
 ./instalar.sh --projeto ~/meu-app # liga um projeto: .forja, CLAUDE.local.md e .git/info/exclude
 ```
 
-Depois, dentro do projeto, rode a skill `/forja-iniciar` no Claude Code para preencher o `CLAUDE.local.md` (papéis, página do projeto) e criar a pasta `forja/` com os acordos. Daí em diante, o ponto de entrada é o **Hefesto**: `claude --agent hefesto` dentro do projeto. Numa sessão comum, `/forja` faz o mesmo papel: ele diz onde o projeto está, propõe o próximo passo e chama o agente certo (também aceita pedidos livres, como `/forja quero entender os stakeholders`).
+Depois, dentro do projeto, rode a skill `/forja-iniciar` no Claude Code para preencher o `CLAUDE.local.md` (papéis, página do projeto) e criar a pasta `forja/` com os acordos. Daí em diante, o ponto de entrada é o **Hefesto**: `claude --agent hefesto` dentro do projeto. Se o seu Claude Code não reconhecer `--agent`, atualize com `claude update`; enquanto isso, rode `claude` e use `/forja`, que faz o mesmo papel: ele diz onde o projeto está, propõe o próximo passo e chama o agente certo (também aceita pedidos livres, como `/forja quero entender os stakeholders`).
 
 No `CLAUDE.local.md`, o **modo de condução** escolhe entre `descoberta-completa` (especificar e prototipar todo o escopo, com o Portão 1 do conjunto, antes de desenvolver) e `incremental` (cada feature segue ao desenvolvimento quando passa no próprio Portão 1).
 
