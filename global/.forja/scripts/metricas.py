@@ -117,7 +117,9 @@ def analisar_registro(arquivo: Path) -> dict:
 
 def main(argv: list[str]) -> int:
     args = [a for a in argv if not a.startswith("--")]
-    pasta = Path(args[0] if args else "forja")
+    pasta = Path(args[0]) if args else Path("forja")
+    if not args and not pasta.is_dir() and (Path.cwd() / "produto").is_dir():
+        pasta = Path.cwd()  # rodado de dentro da pasta de artefatos
     if not pasta.is_dir():
         print(f"pasta de artefatos não encontrada: {pasta}", file=sys.stderr)
         return 1

@@ -257,6 +257,8 @@ Regras: o registro só cresce (nunca apague linhas; marque "Tratada em"); observ
 
 ## Regras de conduta para o Claude
 
+- **Comando do Python**: onde o kit diz `python3`, use o comando em `Python:` do `CLAUDE.local.md`. Se não houver, teste nesta ordem `python3`, `python` e `py -3` (no Windows, `python3` costuma ser só um atalho da Microsoft Store) e use o primeiro que rodar `--version`; depois, proponha gravar o comando no `CLAUDE.local.md`.
+
 - Antes de trabalhar numa feature, leia o `status.md` dela e diga em que estado e sub-etapa está.
 - Não produza artefato de uma etapa posterior à sub-etapa atual sem avisar que isso é antecipar trabalho.
 - Não escreva código de produção para feature que não esteja em `em-desenvolvimento` ou depois. No modo `descoberta-completa`, nada de DV1 em diante antes do Portão 1 do conjunto.

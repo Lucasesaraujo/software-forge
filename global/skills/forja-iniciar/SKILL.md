@@ -12,6 +12,7 @@ description: Prepara um projeto para usar a Forja - cria a pasta de artefatos (f
    - quem ocupa cada papel (coordenação, gerente, líder de design, líder técnico, devs, cliente);
    - onde fica a página do projeto (contexto, ADRs, roadmap);
    - se a pasta de artefatos deve ser outra que não `forja/`.
+   Descubra também o comando do Python da máquina (teste `python3`, `python` e `py -3` com `--version`) e grave em `Python:`.
    Preencha com as respostas. Papel sem pessoa fica como `(a definir)`.
 4. Crie a estrutura (usando a pasta configurada):
    ```
