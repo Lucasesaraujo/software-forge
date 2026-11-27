@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 (2026-11-27)
+- Windows: o comando do Python passa a vir de `Python:` no `CLAUDE.local.md`; sem ele, os agentes testam `python3`, `python` e `py -3`. `forja-iniciar` descobre e grava o comando. (Achado na primeira instalação real, em Windows.)
+- `metricas.py` funciona também quando rodado de dentro da pasta de artefatos, sem argumento.
+
 ## 0.4.0 (2026-11-27)
 
 ### Hefesto, o agente principal

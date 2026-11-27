@@ -31,5 +31,6 @@ Portal de Cursos: portal para alunos se inscreverem em cursos livres de uma esco
 
 ## Convenções do projeto
 - Stack e comandos: ver `forja/arquitetura/01-arquitetura.md`.
+- Python: `python3` <!-- no Windows, normalmente `py -3` -->
 - Rodar testes: `<comando>`
 - Framework BDD: `<ex.: Cucumber, Behave, pytest-bdd>`

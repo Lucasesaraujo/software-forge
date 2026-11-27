@@ -10,7 +10,7 @@
 | Bloqueio | (nenhum) |
 | Modo de condução | descoberta-completa |
 | Próximo portão | Portão 0 (D6) |
-| Versão da Forja | 0.4.0 |
+| Versão da Forja | 0.4.1 |
 
 ## Histórico
 | Data | De | Para | Motivo | Por |
