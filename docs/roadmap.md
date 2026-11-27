@@ -13,15 +13,21 @@
 - Sistema de melhoria contínua: registro, métricas, retro, propostas e incorporação na Forja.
 - 41 templates.
 
-## v0.3 - completar os 50 templates
+## v0.3.0 - orquestração, protótipo e revisores - entregue
+- Skill `/forja` (orquestrador), modo `descoberta-completa` e Portão 1 do conjunto.
+- Agentes `forja-requisitos`, `forja-prototipador`, `forja-revisor-design` e `forja-revisor-spec`.
+- 47 templates.
+
+## v0.4 - completar os 50 templates e guias da especificação
 Templates previstos no método e ainda não escritos:
 - Descoberta: mapa de jornada (D2), checklist LGPD (D3), mapa de histórias (D6).
 - Desenvolvimento: plano de migração de dados (DV3), contrato de evento assíncrono (DV3), checklist de revisão por linguagem (DV6), registro de débito técnico.
 - Durabilidade: plano de testes de carga (DU3), relatório de incidente/postmortem (DU4/DU7), plano de comunicação de implantação (DU6), checklist de acessibilidade (DU1), modelo de ameaças detalhado (DU2).
 - Gestão: relatório de iteração, matriz de rastreabilidade (RF → HU → cenário → teste), registro de riscos.
-- Guias de condução para D7 a DU7, no mesmo formato dos guias da descoberta.
+- Guias de condução para D7 a D9 (prioridade, pelo modo descoberta completa) e depois DV e DU.
+- Integração opcional com o MCP do Figma no prototipador.
 
-## v0.4 - automação
+## v0.5 - automação
 - Script que gera a matriz de rastreabilidade a partir dos identificadores nos artefatos.
 - Hook opcional que lembra de atualizar o `status.md` ao fim de uma etapa.
 - Painel (Artifact) com a evolução das métricas entre retros e versões da Forja.

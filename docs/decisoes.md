@@ -18,3 +18,12 @@
 4. **Registro de melhoria em Markdown, só acrescenta**: legível por pessoas e por script; nada se apaga, a retro marca o que tratou. Cada linha guarda a versão da Forja para comparar antes e depois de uma mudança.
 5. **Métricas sem dependências**: `metricas.py` usa só a biblioteca padrão e lê os artefatos que já existem; nenhum dado extra é exigido.
 6. **Duas metades do ciclo**: retro e ações ficam no projeto; o que é do método volta como proposta anonimizada e entra na Forja por PR, com versão e changelog.
+
+## 2026-11-27: orquestração, protótipo e revisores (v0.3.0)
+
+1. **Orquestrador como skill, não agente**: no Claude Code, subagentes não acionam outros subagentes. A skill `/forja` roda na sessão principal, que pode delegar a qualquer agente. As regras de base seguem no `HEFESTO.md`, sempre carregado.
+2. **Modo de condução configurável**: `descoberta-completa` atende projetos que querem idear, documentar e prototipar tudo antes de desenvolver; `incremental` continua disponível. O método não muda de etapas: muda quando a DV pode começar.
+3. **Portão 1 do conjunto**: no modo descoberta completa, um portão a mais olha o produto inteiro (cobertura dos Must, consistência entre features, protótipo navegável completo) antes de liberar a DV1.
+4. **Requisitos e protótipo com agentes próprios**: requisitos (D5 e mudanças) e protótipo (D8) viraram trabalho central na descoberta completa; separá-los do analista e do especificador deixa cada prompt focado.
+5. **Revisores separados de quem produz**: spec e design são revisados por agentes que não os escreveram, como a DV6 faz com código.
+6. **Protótipo em HTML no repositório**: sem dependências nem contas, versionável e navegável; Figma fica como opção quando o MCP estiver configurado.

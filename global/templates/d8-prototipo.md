@@ -2,7 +2,8 @@
 
 <!-- Salvar em forja/features/<F>/08-prototipo.md. -->
 
-- Protótipo: <link do Figma ou similar>
+- Protótipo: `forja/prototipo/F-01-inscricao/` (abrir `forja/prototipo/index.html`); Figma: <link, se houver>
+- Gerado por: `forja-prototipador` · Revisão: `revisao-design.md`
 - Responsável: líder de design
 
 ## Fluxo

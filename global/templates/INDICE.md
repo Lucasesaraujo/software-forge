@@ -16,6 +16,12 @@ Todos usam o exemplo neutro **Portal de Cursos**. Copie, substitua o exemplo e r
 | `d2-roteiro-entrevista.md` | D2 | `forja/produto/02-roteiro-entrevista.md` |
 | `d2-nota-entrevista.md` | D2 | `forja/produto/pesquisa/E-<nn>.md` |
 | `d5-glossario.md` | D5 | `forja/produto/glossario.md` |
+| `d5-rastreabilidade.md` | D5 a D8 | `forja/produto/rastreabilidade.md` |
+| `d8-design-base.md` | D8 (uma vez) | `forja/prototipo/design-base.md` |
+| `d8-prototipo-base.html` | D8 | `forja/prototipo/index.html` e telas |
+| `revisao-spec.md` | D9 | `forja/features/<F>/revisao-spec.md` |
+| `revisao-design.md` | D8 e D9 | `forja/features/<F>/revisao-design.md` |
+| `portao-1-conjunto.md` | Portão 1 do conjunto | `forja/produto/portao-1-conjunto.md` |
 | `melhoria-registro.md` | Melhoria contínua | `forja/melhoria/registro.md` |
 | `melhoria-retro.md` | Melhoria contínua | `forja/melhoria/retros/AAAA-MM-DD-<escopo>.md` |
 | `melhoria-proposta.md` | Melhoria contínua | `forja/melhoria/propostas/PM-<nnn>-<slug>.md` |

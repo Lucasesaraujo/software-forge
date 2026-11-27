@@ -19,3 +19,9 @@
 |---|---|---|
 | RN-02 | Uma turma não aceita inscrições acima da capacidade | OBJ-02 |
 | RN-03 | O aluno só se inscreve se tiver concluído os pré-requisitos do curso | Secretaria |
+
+## Histórico de mudanças
+<!-- Depois do Portão 0, toda mudança é registrada aqui pelo forja-requisitos, com o impacto pela matriz de rastreabilidade. -->
+| Data | Requisito | Mudança | Motivo | Pedido por | Aprovado por | Afeta |
+|---|---|---|---|---|---|---|
+| 2026-12-08 | RN-03 | Pré-requisito pode ser dispensado pela secretaria | Caso real de aluno transferido | Secretaria | Gerente | F-01 (volta para D7) |

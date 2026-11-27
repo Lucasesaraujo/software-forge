@@ -26,7 +26,9 @@ cd software-forge
 ./instalar.sh --projeto ~/meu-app # liga um projeto: .forja, CLAUDE.local.md e .git/info/exclude
 ```
 
-Depois, dentro do projeto, rode a skill `/forja-iniciar` no Claude Code para preencher o `CLAUDE.local.md` (papéis, página do projeto) e criar a pasta `forja/` com os acordos. Para saber onde as coisas estão, `/forja-status`.
+Depois, dentro do projeto, rode a skill `/forja-iniciar` no Claude Code para preencher o `CLAUDE.local.md` (papéis, página do projeto) e criar a pasta `forja/` com os acordos. Daí em diante, o ponto de entrada é `/forja`: ele diz onde o projeto está, propõe o próximo passo e chama o agente certo (também aceita pedidos livres, como `/forja quero entender os stakeholders`).
+
+No `CLAUDE.local.md`, o **modo de condução** escolhe entre `descoberta-completa` (especificar e prototipar todo o escopo, com o Portão 1 do conjunto, antes de desenvolver) e `incremental` (cada feature segue ao desenvolvimento quando passa no próprio Portão 1).
 
 | No repositório | Instalado em |
 |---|---|
@@ -43,7 +45,11 @@ Depois, dentro do projeto, rode a skill `/forja-iniciar` no Claude Code para pre
 | `forja-analista` | D1 a D6 (coordena a descoberta) |
 | `forja-facilitador` | Kickoff, oficinas e atas da descoberta |
 | `forja-pesquisador` | D2: entrevistas e síntese |
-| `forja-especificador` | D7 a D9 |
+| `forja-requisitos` | D5, glossário, rastreabilidade e mudanças de requisito |
+| `forja-especificador` | D7 e D9 |
+| `forja-prototipador` | D8: base de design e protótipos HTML navegáveis |
+| `forja-revisor-design` | Revisão dos protótipos |
+| `forja-revisor-spec` | Revisão de critérios, Gherkin e spec |
 | `forja-arquiteto` | DV1 a DV3 |
 | `forja-dev` | DV4 e DV5 (testes primeiro) |
 | `forja-revisor` | DV6 |
@@ -51,7 +57,7 @@ Depois, dentro do projeto, rode a skill `/forja-iniciar` no Claude Code para pre
 | `forja-portao` | Checagem dos portões (somente leitura) |
 | `forja-melhoria` | Retrospectivas com métricas e propostas de melhoria |
 
-Skills: `forja-iniciar`, `forja-feature`, `forja-status`, `forja-avancar`, `forja-portao`, `forja-registrar-reuniao`, `forja-observar`, `forja-retro`, `forja-incorporar-melhoria`.
+Skills: `forja` (orquestrador), `forja-iniciar`, `forja-feature`, `forja-status`, `forja-avancar`, `forja-portao`, `forja-registrar-reuniao`, `forja-observar`, `forja-retro`, `forja-incorporar-melhoria`.
 
 ## Melhoria contínua
 

@@ -4,7 +4,7 @@ description: Checa os critérios de um portão da Forja (0 produto, 1 spec, 2 c�
 tools: Read, Glob, Grep, Bash
 ---
 
-Você é o guardião dos portões da Forja. Siga `.forja/HEFESTO.md` e o `CLAUDE.local.md` do projeto. Você não edita arquivos e não aprova portões.
+Você é o guardião dos portões da Forja (0, 1, 1 do conjunto, 2 e 3). Siga `.forja/HEFESTO.md` e o `CLAUDE.local.md` do projeto. Você não edita arquivos e não aprova portões.
 
 ## Critérios por portão
 
@@ -19,6 +19,14 @@ Você é o guardião dos portões da Forja. Siga `.forja/HEFESTO.md` e o `CLAUDE
 - Cenários usam valores concretos e são verificáveis.
 - Protótipo cobre estados de tela e acessibilidade.
 - Cada item da DoR (`forja/acordos/dor.md`) atendido, com evidência.
+- `revisao-spec.md` e `revisao-design.md` existem e não têm achado `bloqueante` aberto.
+
+**Portão 1 do conjunto (modo descoberta completa)**
+- Toda história no escopo da descoberta (o `CLAUDE.local.md` define: todas as Must, ou a lista do primeiro incremento) tem feature com Portão 1 aprovado.
+- `forja/produto/rastreabilidade.md` cobre todos os RF Must até cenário e tela; nenhum RF Must órfão.
+- `forja/prototipo/index.html` navega por todas as telas; `design-base.md` existe e as telas o seguem.
+- Revisões entre features (spec e design) sem conflito bloqueante aberto.
+- Glossário sem termos duplicados ou conflitantes.
 
 **Portão 2 (DV6, código)**
 - `dv6-revisao.md` existe, foi escrito por alguém que não é o autor do código e não tem achado `bloqueante` aberto.

@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.3.0 (2026-11-27)
+
+### Orquestração
+- Skill `forja` (`/forja`): ponto de entrada que lê o estado, propõe o próximo passo, aciona o agente certo e roteia pedidos livres. É uma skill porque só a sessão principal do Claude Code aciona subagentes.
+
+### Modo de condução
+- `descoberta-completa` (no `CLAUDE.local.md`): todo o escopo passa por especificação, protótipo e revisões antes do desenvolvimento, com o novo **Portão 1 do conjunto** (`portao-1-conjunto.md`). `incremental` mantém o fluxo por feature.
+- Estados do produto `em-especificacao`, `especificado` e `em-desenvolvimento`; `forja-feature lote` abre todas as features do escopo.
+
+### Novos agentes
+- `forja-requisitos`: D5, glossário, matriz de rastreabilidade e controle de mudanças de requisito.
+- `forja-prototipador`: base de design e protótipos HTML navegáveis com todos os estados, ligados aos cenários Gherkin.
+- `forja-revisor-design`: cobertura de cenários, heurísticas de Nielsen, WCAG 2.1 AA e consistência entre features.
+- `forja-revisor-spec`: completude, ambiguidade, testabilidade, consistência e DoR.
+
+### Templates
+- `d5-rastreabilidade.md`, `d8-design-base.md`, `d8-prototipo-base.html`, `revisao-spec.md`, `revisao-design.md`, `portao-1-conjunto.md`; histórico de mudanças em `d5-requisitos.md`; condução no `claude-local.md`.
+
 ## 0.2.0 (2026-11-27)
 
 ### Descoberta mais robusta

@@ -30,7 +30,7 @@ instalar_kit() {
     nome="$(basename "$item")"; alvo="$DESTINO/agents/$nome"
     colocar "$item" "$alvo"
   done
-  for item in "$ORIGEM"/global/skills/forja-*; do
+  for item in "$ORIGEM"/global/skills/forja "$ORIGEM"/global/skills/forja-*; do
     nome="$(basename "$item")"; alvo="$DESTINO/skills/$nome"
     colocar "$item" "$alvo"
   done
@@ -46,7 +46,7 @@ instalar_kit() {
   cp "$ORIGEM/VERSAO" "$DESTINO/.forja/VERSAO"
 
   info "kit $(cat "$ORIGEM/VERSAO") instalado em $DESTINO ($modo)"
-  info "agentes: $(ls "$DESTINO/agents" | grep -c '^forja-'), skills: $(ls "$DESTINO/skills" | grep -c '^forja-'), templates: $(ls "$DESTINO/.forja/templates" | grep -vc '^INDICE.md$')"
+  info "agentes: $(ls "$DESTINO/agents" | grep -c '^forja-'), skills: $(ls "$DESTINO/skills" | grep -c '^forja'), templates: $(ls "$DESTINO/.forja/templates" | grep -vc '^INDICE.md$')"
 }
 
 ligar_projeto() {
@@ -81,7 +81,7 @@ ligar_projeto() {
 }
 
 desinstalar() {
-  rm -rf "$DESTINO"/agents/forja-*.md "$DESTINO"/skills/forja-* "$DESTINO/.forja"
+  rm -rf "$DESTINO"/agents/forja-*.md "$DESTINO"/skills/forja "$DESTINO"/skills/forja-* "$DESTINO/.forja"
   info "kit removido de $DESTINO"
 }
 
