@@ -1,4 +1,6 @@
-# HEFESTO: o método da Forja (v2.1, kit 0.3)
+# HEFESTO: o método da Forja (v2.1, kit 0.4)
+
+A Forja de Software é a oficina; **Hefesto** é o seu agente principal. Ele conduz o método com a equipe de agentes e forja, com a equipe de forja, os agentes, skills, tools e MCPs que cada projeto precisa, guardando no **acervo** o que for reaproveitável.
 
 Este arquivo é importado pelo `CLAUDE.local.md` de cada projeto (`@.forja/HEFESTO.md`). Ele diz como trabalhar; o contexto do projeto (papéis, ADRs, roadmap, onde ficam os artefatos) vem do próprio `CLAUDE.local.md`.
 
@@ -14,7 +16,7 @@ Este arquivo é importado pelo `CLAUDE.local.md` de cada projeto (`@.forja/HEFES
 
 ## Orquestração e modos de condução
 
-- **Ponto de entrada**: a skill `forja` (`/forja`). Ela lê o estado, diz onde estamos, propõe o próximo passo e aciona o agente certo; também roteia pedidos livres. Só a sessão principal aciona agentes, por isso a orquestração é uma skill e não um agente.
+- **Ponto de entrada**: o agente principal `hefesto`, iniciado com `claude --agent hefesto`. Como sessão principal, ele aciona todos os outros agentes. Numa sessão comum, a skill `forja` (`/forja`) faz o mesmo papel de orquestração: lê o estado, diz onde estamos, propõe o próximo passo e aciona o agente certo. Subagentes não acionam subagentes, por isso a orquestração fica sempre na sessão principal.
 - **Modo de condução** (no `CLAUDE.local.md`):
   - `descoberta-completa`: depois do Portão 0, todo o escopo da descoberta (por padrão, as histórias Must) passa por D7 a D9, com protótipo e revisões, e pelo **Portão 1 do conjunto**. Só então começam a DV1 e a DV2. Nenhum código de produção antes disso.
   - `incremental`: cada feature segue para a DV2 assim que passa no próprio Portão 1.
@@ -187,6 +189,7 @@ Transições válidas: sempre para a sub-etapa seguinte, para `bloqueada` (e de 
 
 | Agente | Etapas |
 |---|---|
+| `hefesto` | Agente principal: conduz o método e forja agentes e ferramentas |
 | `forja-analista` | D1 a D6 (coordena a descoberta e é dono dos artefatos) |
 | `forja-facilitador` | Reuniões da descoberta: kickoff, oficinas, validações; pauta e ata |
 | `forja-pesquisador` | D2: roteiro, entrevistas, síntese |
@@ -201,6 +204,10 @@ Transições válidas: sempre para a sub-etapa seguinte, para `bloqueada` (e de 
 | `forja-durabilidade` | DV7, DU1 a DU4, DU6 e DU7 |
 | `forja-portao` | Checagem dos portões 0 a 3 (somente leitura) |
 | `forja-melhoria` | Retrospectivas: cruza métricas e observações e gera ações e propostas |
+| `forja-demanda` | Encomendas: entende a necessidade e procura no acervo |
+| `forja-projetista` | Encomendas: escolhe o tipo e desenha o item |
+| `forja-revisor-lacunas` | Encomendas: revisa o que foi forjado |
+| `forja-arquivista` | Encomendas: leva itens genéricos ao acervo |
 
 | Skill | Para quê |
 |---|---|
@@ -213,7 +220,27 @@ Transições válidas: sempre para a sub-etapa seguinte, para `bloqueada` (e de 
 | `forja-registrar-reuniao` | Levar ata, notas ou transcrição de uma reunião ou entrevista para os artefatos |
 | `forja-observar` | Registrar uma observação de processo no registro de melhoria |
 | `forja-retro` | Retrospectiva de iteração, fase, feature ou portão, com métricas |
+| `forja-encomenda` | Encomendar um agente, skill, tool ou MCP à equipe de forja |
 | `forja-incorporar-melhoria` | No repositório da Forja: incorporar uma proposta aceita e gerar nova versão |
+
+## Forjar agentes e ferramentas
+
+Quando um projeto precisa de um agente, skill, tool ou MCP que não existe, abre-se uma **encomenda** (skill `forja-encomenda`, ou pedindo ao Hefesto):
+
+| Passo | Quem | Artefato em `forja/encomendas/EN-<nnn>-<slug>/` |
+|---|---|---|
+| Demanda e busca no acervo | `forja-demanda` | `01-demanda.md` |
+| Tipo e desenho, com casos de teste | `forja-projetista` | `02-proposta.md` |
+| Aprovação | a pessoa | registro na proposta |
+| Forja | `hefesto` | arquivos no projeto, `03-criacao.md` |
+| Revisão de lacunas | `forja-revisor-lacunas` | `04-revisao.md` |
+| Arquivamento no acervo (se genérico) | `forja-arquivista` | item em `acervo/` no repositório da Forja |
+
+- Padrões de cada tipo: `.forja/padroes/padroes-agente.md`, `padroes-skill.md`, `padroes-tool.md`, `padroes-mcp.md`; acervo: `.forja/padroes/acervo.md`.
+- Validação: `python3 .forja/scripts/validar_claude.py .` (formato, nomes, permissões, segredos, MCP).
+- **Acervo**: biblioteca incremental e versionada no repositório da Forja (`acervo/`), instalada em `.forja/acervo/`. Use com `python3 .forja/scripts/acervo.py buscar|usar|atualizar`. O projeto registra o que usa em `.claude/forja-acervo.json`.
+- Reaproveite antes de criar; nunca grave segredos; nada do projeto entra no acervo; hooks, `settings.json` e `.mcp.json` só com aprovação registrada.
+- Lacunas recorrentes apontadas pelo revisor viram observações de melhoria e, com o tempo, melhores padrões.
 
 ## Melhoria contínua
 

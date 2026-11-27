@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.0 (2026-11-27)
+
+### Hefesto, o agente principal
+- `hefesto` roda como sessão principal (`claude --agent hefesto`): conduz o método (roteamento da skill `forja`) e forja agentes, skills, tools e MCPs.
+
+### Equipe de forja e encomendas
+- Agentes `forja-demanda`, `forja-projetista`, `forja-revisor-lacunas` e `forja-arquivista`; skill `forja-encomenda` (demanda → proposta → aprovação → forja → revisão → acervo).
+- Padrões por tipo em `global/.forja/padroes/` (agente, skill, tool, MCP) e do acervo.
+- `validar_claude.py`: valida agentes, skills, ferramentas e `.mcp.json` de um projeto (nomes, ferramentas conhecidas, segredos literais, versões fixas).
+- Templates de encomenda (catálogo, demanda, proposta, criação, revisão).
+
+### Acervo
+- `acervo/` no repositório: biblioteca incremental e versionada, com `item.json`, catálogo gerado e primeiro item (`agentes/analista-concorrencia`).
+- `acervo.py`: listar, buscar, mostrar, usar (com dependências e mescla de `.mcp.json`), atualizar (minor automático, major com confirmação), registrar e catalogar.
+- Instalador leva acervo, padrões e o `hefesto`; CI testa acervo e validador.
+
 ## 0.3.0 (2026-11-27)
 
 ### Orquestração

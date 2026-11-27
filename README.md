@@ -2,6 +2,8 @@
 
 Método de desenvolvimento apoiado por agentes, seguindo Spec-Driven Development (SDD).
 
+A Forja é a oficina; **Hefesto** é o seu agente principal. Ele conduz o método com uma equipe de agentes e forja, com a equipe de forja, os agentes, skills, tools e MCPs que cada projeto precisa. O que for reaproveitável vai para o **acervo**, uma biblioteca incremental e versionada pronta para os próximos projetos.
+
 A Forja é genérica: método, agentes, skills, templates e o roadmap de construção da própria Forja. Nada aqui cita um projeto específico. O contexto de cada projeto (papéis, ADRs, roadmap) fica fora deste repositório.
 
 ## Estrutura
@@ -13,7 +15,9 @@ global/          Kit instalado em ~/.claude de cada pessoa
   skills/        Skills
   templates/     Templates de artefatos (exemplo neutro: Portal de Cursos)
   .forja/        HEFESTO.md (o método), guias/ de condução e scripts/ (métricas)
-scripts/         Verificação do kit e teste do instalador
+  .forja/padroes Padrões para forjar agentes, skills, tools e MCPs
+acervo/          Biblioteca incremental de itens forjados (catálogo em acervo/CATALOGO.md)
+scripts/         Verificação do kit e testes
 instalar.sh      Instala o kit e liga projetos
 ```
 
@@ -26,7 +30,7 @@ cd software-forge
 ./instalar.sh --projeto ~/meu-app # liga um projeto: .forja, CLAUDE.local.md e .git/info/exclude
 ```
 
-Depois, dentro do projeto, rode a skill `/forja-iniciar` no Claude Code para preencher o `CLAUDE.local.md` (papéis, página do projeto) e criar a pasta `forja/` com os acordos. Daí em diante, o ponto de entrada é `/forja`: ele diz onde o projeto está, propõe o próximo passo e chama o agente certo (também aceita pedidos livres, como `/forja quero entender os stakeholders`).
+Depois, dentro do projeto, rode a skill `/forja-iniciar` no Claude Code para preencher o `CLAUDE.local.md` (papéis, página do projeto) e criar a pasta `forja/` com os acordos. Daí em diante, o ponto de entrada é o **Hefesto**: `claude --agent hefesto` dentro do projeto. Numa sessão comum, `/forja` faz o mesmo papel: ele diz onde o projeto está, propõe o próximo passo e chama o agente certo (também aceita pedidos livres, como `/forja quero entender os stakeholders`).
 
 No `CLAUDE.local.md`, o **modo de condução** escolhe entre `descoberta-completa` (especificar e prototipar todo o escopo, com o Portão 1 do conjunto, antes de desenvolver) e `incremental` (cada feature segue ao desenvolvimento quando passa no próprio Portão 1).
 
@@ -42,6 +46,7 @@ No `CLAUDE.local.md`, o **modo de condução** escolhe entre `descoberta-complet
 
 | Agente | Etapas |
 |---|---|
+| `hefesto` | **Agente principal**: conduz o método e forja agentes e ferramentas |
 | `forja-analista` | D1 a D6 (coordena a descoberta) |
 | `forja-facilitador` | Kickoff, oficinas e atas da descoberta |
 | `forja-pesquisador` | D2: entrevistas e síntese |
@@ -56,8 +61,22 @@ No `CLAUDE.local.md`, o **modo de condução** escolhe entre `descoberta-complet
 | `forja-durabilidade` | DV7, DU1 a DU4, DU6, DU7 |
 | `forja-portao` | Checagem dos portões (somente leitura) |
 | `forja-melhoria` | Retrospectivas com métricas e propostas de melhoria |
+| `forja-demanda` | Forja: entende a necessidade e procura no acervo |
+| `forja-projetista` | Forja: escolhe o tipo (agente, skill, tool, MCP) e desenha |
+| `forja-revisor-lacunas` | Forja: revisa o que o Hefesto forjou |
+| `forja-arquivista` | Forja: leva itens genéricos ao acervo |
 
-Skills: `forja` (orquestrador), `forja-iniciar`, `forja-feature`, `forja-status`, `forja-avancar`, `forja-portao`, `forja-registrar-reuniao`, `forja-observar`, `forja-retro`, `forja-incorporar-melhoria`.
+Skills: `forja` (orquestrador), `forja-iniciar`, `forja-feature`, `forja-status`, `forja-avancar`, `forja-portao`, `forja-registrar-reuniao`, `forja-observar`, `forja-retro`, `forja-incorporar-melhoria`, `forja-encomenda`.
+
+## Forjar agentes e ferramentas
+
+Peça ao Hefesto (ou rode `/forja-encomenda`) quando o projeto precisar de um agente, skill, tool ou MCP. A encomenda passa por demanda (com busca no acervo), proposta, sua aprovação, forja pelo Hefesto, revisão de lacunas e, se for genérica, arquivamento no acervo. Padrões em `global/.forja/padroes/`; validação com `validar_claude.py`.
+
+```bash
+python3 .forja/scripts/acervo.py buscar concorrencia
+python3 .forja/scripts/acervo.py usar agentes/analista-concorrencia --projeto .
+python3 .forja/scripts/acervo.py atualizar --projeto . --aplicar
+```
 
 ## Melhoria contínua
 
@@ -69,9 +88,10 @@ Durante o uso, cada etapa e cada portão deixam observações em `forja/melhoria
 python3 scripts/verificar.py        # consistência de agentes, skills, templates e referências
 bash scripts/testar-instalacao.sh   # instalador num ~/.claude temporário
 bash scripts/testar-metricas.sh     # métricas com um projeto de exemplo
+bash scripts/testar-acervo.sh       # acervo (usar, atualizar, catalogar) e validador
 ```
 
-As três rodam no CI a cada push.
+Todas rodam no CI a cada push.
 
 Cada projeto usa a Forja localmente com um `CLAUDE.local.md` que importa o método com `@.forja/HEFESTO.md`, ignorado via `.git/info/exclude` no repositório do projeto.
 

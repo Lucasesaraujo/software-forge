@@ -1,0 +1,13 @@
+{
+  "nome": "analista-concorrencia",
+  "tipo": "agente",
+  "versao": "1.0.0",
+  "descricao": "Mapeia concorrentes e alternativas, compara com fontes e aponta diferenciais defensáveis e lacunas de mercado.",
+  "etiquetas": ["descoberta", "mercado", "concorrencia", "diferenciais"],
+  "etapas": ["D1", "D3"],
+  "parametros": [{"nome": "Concorrentes conhecidos", "onde": "CLAUDE.local.md", "obrigatorio": false}],
+  "variaveis_ambiente": [],
+  "requer": [],
+  "arquivos": ["analista-concorrencia.md"],
+  "historico": [{"versao": "1.0.0", "data": "2026-11-27", "mudanca": "Primeira versão, semente do acervo"}]
+}

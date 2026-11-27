@@ -34,7 +34,8 @@ def verificar_agentes() -> set[str]:
         fm = frontmatter(arq)
         if fm.get("name") != arq.stem:
             erro(f"agente {arq.name}: name '{fm.get('name')}' difere do arquivo")
-        for campo in ("description", "tools"):
+        campos = ("description",) if arq.stem == "hefesto" else ("description", "tools")
+        for campo in campos:
             if not fm.get(campo):
                 erro(f"agente {arq.name}: falta '{campo}'")
         nomes.add(arq.stem)
@@ -133,6 +134,26 @@ def verificar_guias(templates: set[str], agentes: set[str], skills: set[str]) ->
     return guias
 
 
+def verificar_padroes_e_acervo() -> None:
+    padroes = GLOBAL / ".forja" / "padroes"
+    for tipo in ("agente", "skill", "tool", "mcp"):
+        if not (padroes / f"padroes-{tipo}.md").exists():
+            erro(f"falta padrão de forja: padroes-{tipo}.md")
+    textos = [a.read_text(encoding="utf-8") for a in list((GLOBAL / "agentes").glob("*.md")) + list((GLOBAL / "skills").glob("*/SKILL.md")) + [GLOBAL / ".forja" / "HEFESTO.md"]]
+    for ref in set(re.findall(r"\.forja/padroes/([\w.-]+\.md)", "".join(textos))):
+        if not (padroes / ref).exists():
+            erro(f"padrão citado e inexistente: .forja/padroes/{ref}")
+    r = subprocess.run([sys.executable, str(GLOBAL / ".forja" / "scripts" / "acervo.py"), "--acervo", str(RAIZ / "acervo"), "catalogar", "--checar"],
+                       capture_output=True, text=True)
+    if r.returncode:
+        erro(f"acervo: {r.stderr.strip() or r.stdout.strip()}")
+    for pasta in sorted((RAIZ / "acervo" / "agentes").glob("*")):
+        for md in pasta.glob("*.md"):
+            fm = frontmatter(md)
+            if fm.get("name") != md.stem or not fm.get("description") or not fm.get("tools"):
+                erro(f"acervo: agente {md.name} com frontmatter incompleto")
+
+
 def verificar_neutralidade() -> None:
     """Contexto de projeto não entra no repositório da Forja."""
     try:
@@ -160,6 +181,7 @@ def main() -> int:
     templates = verificar_templates()
     verificar_referencias(agentes, skills, templates)
     guias = verificar_guias(templates, agentes, skills)
+    verificar_padroes_e_acervo()
     verificar_neutralidade()
     verificar_instalador()
     if erros:
