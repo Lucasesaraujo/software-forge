@@ -5,6 +5,8 @@
 - Cada projeto tem uma página própria com contexto, papéis (quem ocupa cada papel), ADRs e o próprio roadmap.
 - No kit: `global/` (agentes, skills, `.forja/HEFESTO.md` e templates) e `projetos/<nome>/CLAUDE.local.md`, que importa o método com `@.forja/HEFESTO.md`.
 
+> A partir da [ADR 0001](decisoes/0001-forja-de-sistemas-agenticos.md), `global/` passa a ser `nucleo/` e o contexto do projeto passa a fazer parte da instância forjada para ele, fora deste repositório.
+
 ## Estrutura do método
 
 ### Descoberta
