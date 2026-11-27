@@ -27,3 +27,14 @@
 4. **Requisitos e protótipo com agentes próprios**: requisitos (D5 e mudanças) e protótipo (D8) viraram trabalho central na descoberta completa; separá-los do analista e do especificador deixa cada prompt focado.
 5. **Revisores separados de quem produz**: spec e design são revisados por agentes que não os escreveram, como a DV6 faz com código.
 6. **Protótipo em HTML no repositório**: sem dependências nem contas, versionável e navegável; Figma fica como opção quando o MCP estiver configurado.
+
+## 2026-11-27: Hefesto, equipe de forja e acervo (v0.4.0)
+
+1. **Hefesto é o agente principal**, iniciado com `claude --agent hefesto`. Como sessão principal ele pode acionar subagentes, o que resolve a orquestração. A skill `/forja` continua para sessões comuns, com as mesmas regras de roteamento.
+2. **Hefesto forja; a equipe prepara e revisa**: demanda, projetista, revisor de lacunas e arquivista são subagentes; a criação fica com o Hefesto, que tem todas as ferramentas e a conversa com a pessoa.
+3. **Uma equipe para os quatro tipos**, com padrões por tipo (`padroes-agente|skill|tool|mcp.md`), em vez de uma equipe por tipo. O que muda entre tipos é o padrão, não o fluxo.
+4. **Tool = script ou hook**: as ferramentas nativas do Claude Code não se forjam; forja-se script com README e teste, ou hook com aprovação explícita.
+5. **MCP: configurar antes de construir**: oficial > comunidade revisada com versão fixa > servidor próprio.
+6. **Aprovação humana antes de forjar** e para qualquer mudança em `settings.json`, hooks ou `.mcp.json`.
+7. **Acervo no próprio repositório da Forja**, com versões semver por item, catálogo gerado e instalação sob demanda (`acervo.py usar`), para não carregar todos os itens em toda sessão. O projeto registra o que usa em `.claude/forja-acervo.json`, o que permite atualizar.
+8. **Entrada no acervo por PR**: o arquivista cria branch e commit locais; a pessoa abre o PR e faz o merge.

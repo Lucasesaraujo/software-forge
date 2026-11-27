@@ -16,3 +16,5 @@ jobs:
         run: bash scripts/testar-instalacao.sh
       - name: Métricas
         run: bash scripts/testar-metricas.sh
+      - name: Acervo e validador
+        run: bash scripts/testar-acervo.sh

@@ -22,6 +22,11 @@ Todos usam o exemplo neutro **Portal de Cursos**. Copie, substitua o exemplo e r
 | `revisao-spec.md` | D9 | `forja/features/<F>/revisao-spec.md` |
 | `revisao-design.md` | D8 e D9 | `forja/features/<F>/revisao-design.md` |
 | `portao-1-conjunto.md` | Portão 1 do conjunto | `forja/produto/portao-1-conjunto.md` |
+| `encomenda-catalogo.md` | Encomendas | `forja/encomendas/catalogo.md` |
+| `encomenda-demanda.md` | Encomendas | `forja/encomendas/EN-<nnn>-<slug>/01-demanda.md` |
+| `encomenda-proposta.md` | Encomendas | `forja/encomendas/EN-<nnn>-<slug>/02-proposta.md` |
+| `encomenda-criacao.md` | Encomendas | `forja/encomendas/EN-<nnn>-<slug>/03-criacao.md` |
+| `encomenda-revisao.md` | Encomendas | `forja/encomendas/EN-<nnn>-<slug>/04-revisao.md` |
 | `melhoria-registro.md` | Melhoria contínua | `forja/melhoria/registro.md` |
 | `melhoria-retro.md` | Melhoria contínua | `forja/melhoria/retros/AAAA-MM-DD-<escopo>.md` |
 | `melhoria-proposta.md` | Melhoria contínua | `forja/melhoria/propostas/PM-<nnn>-<slug>.md` |
@@ -52,4 +57,4 @@ Todos usam o exemplo neutro **Portal de Cursos**. Copie, substitua o exemplo e r
 | `du6-producao.md` | DU6 | `forja/features/<F>/du6-producao.md` |
 | `du7-aprendizado.md` | DU7 | `forja/features/<F>/du7-aprendizado.md` |
 
-Guias de condução da descoberta: `.forja/guias/`. Templates previstos para as próximas versões estão em `docs/roadmap.md` do repositório da Forja.
+Guias de condução da descoberta: `.forja/guias/`. Padrões para forjar agentes, skills, tools e MCPs: `.forja/padroes/`. Templates previstos para as próximas versões estão em `docs/roadmap.md` do repositório da Forja.

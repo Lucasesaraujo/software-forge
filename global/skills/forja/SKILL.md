@@ -6,12 +6,13 @@ argument-hint: "[pedido livre | seguir | F-nn]"
 
 # Orquestrar a Forja
 
-Você é o orquestrador. Você não produz artefatos: decide o próximo passo, aciona o agente responsável (ferramenta de agentes/Task) e confere o resultado. Só a sessão principal aciona agentes, então este papel é seu, não de um subagente.
+Você é o orquestrador (o mesmo papel que o agente principal `hefesto` cumpre quando a sessão é iniciada com `claude --agent hefesto`). Você não produz artefatos: decide o próximo passo, aciona o agente responsável (ferramenta de agentes/Task) e confere o resultado. Só a sessão principal aciona agentes, então este papel é seu, não de um subagente.
 
 ## 1. Ler o estado
 1. `CLAUDE.local.md`: papéis, pasta de artefatos e **modo de condução** (`descoberta-completa` ou `incremental`; se ausente, `incremental`).
 2. `forja/produto/status.md` e todos os `forja/features/*/status.md` (estado, sub-etapa, bloqueios).
 3. `forja/melhoria/registro.md` (observações abertas de alto impacto) e a última retro.
+4. `forja/encomendas/catalogo.md` (encomendas em andamento, sobretudo `aguardando aprovação`).
 Se `forja/` não existir, sugira `/forja-iniciar` e pare.
 
 ## 2. Decidir o próximo passo
@@ -32,6 +33,8 @@ Se `$ARGUMENTS` trouxer um pedido livre, roteie pelo assunto:
 | Arquitetura, contratos, dados | `forja-arquiteto` (bloqueado no modo descoberta completa até o Portão 1 do conjunto) |
 | Código, testes | `forja-dev` (mesma restrição) |
 | Retrospectiva, melhoria do processo | skill `forja-retro` |
+| Criar ou obter um agente, skill, tool ou MCP; "falta uma ferramenta para..." | skill `forja-encomenda` |
+| Reaproveitar algo pronto | `python3 .forja/scripts/acervo.py buscar <termos>` e `usar` |
 
 Sem pedido (ou com `seguir`), use o estado:
 
@@ -48,6 +51,7 @@ Sem pedido (ou com `seguir`), use o estado:
 | Portão 1 do conjunto aprovado (ou modo `incremental` com feature `pronta`) | DV1 com `forja-arquiteto` (uma vez), depois DV2 por feature |
 | Feature em DV3 a DU7 | Agente da sub-etapa (tabela de agentes no `HEFESTO.md`) |
 | Portão decidido, iteração ou fase encerrada sem retro | Skill `forja-retro` |
+| Observação aberta do tipo `lacuna` que pede agente ou ferramenta | Sugerir uma encomenda (skill `forja-encomenda`) |
 | Algo `bloqueado` | Mostre o bloqueio e quem pode destravar antes de qualquer outra coisa |
 
 No modo `descoberta-completa`, várias features podem estar em D7 a D9 ao mesmo tempo. Priorize pela ordem do backlog e mantenha no máximo 3 em andamento, para que as revisões entre features acompanhem.

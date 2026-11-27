@@ -18,7 +18,10 @@
 - Agentes `forja-requisitos`, `forja-prototipador`, `forja-revisor-design` e `forja-revisor-spec`.
 - 47 templates.
 
-## v0.4 - completar os 50 templates e guias da especificação
+## v0.4.0 - Hefesto, equipe de forja e acervo - entregue
+- Hefesto como agente principal; encomendas de agentes, skills, tools e MCPs; acervo incremental com `acervo.py`; validador de projetos.
+
+## v0.5 - completar os 50 templates e guias da especificação
 Templates previstos no método e ainda não escritos:
 - Descoberta: mapa de jornada (D2), checklist LGPD (D3), mapa de histórias (D6).
 - Desenvolvimento: plano de migração de dados (DV3), contrato de evento assíncrono (DV3), checklist de revisão por linguagem (DV6), registro de débito técnico.
@@ -27,7 +30,8 @@ Templates previstos no método e ainda não escritos:
 - Guias de condução para D7 a D9 (prioridade, pelo modo descoberta completa) e depois DV e DU.
 - Integração opcional com o MCP do Figma no prototipador.
 
-## v0.5 - automação
+## v0.6 - automação
+- Busca semântica no acervo e sugestão proativa de itens pela etapa do projeto.
 - Script que gera a matriz de rastreabilidade a partir dos identificadores nos artefatos.
 - Hook opcional que lembra de atualizar o `status.md` ao fim de uma etapa.
 - Painel (Artifact) com a evolução das métricas entre retros e versões da Forja.

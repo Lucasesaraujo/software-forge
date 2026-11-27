@@ -26,7 +26,7 @@ instalar_kit() {
     if [ "$modo" = link ]; then ln -s "$1" "$2"; else cp -R "$1" "$2"; fi
   }
 
-  for item in "$ORIGEM"/global/agentes/forja-*.md; do
+  for item in "$ORIGEM"/global/agentes/hefesto.md "$ORIGEM"/global/agentes/forja-*.md; do
     nome="$(basename "$item")"; alvo="$DESTINO/agents/$nome"
     colocar "$item" "$alvo"
   done
@@ -42,11 +42,14 @@ instalar_kit() {
   colocar "$ORIGEM/global/templates" "$DESTINO/.forja/templates"
   colocar "$ORIGEM/global/.forja/guias" "$DESTINO/.forja/guias"
   colocar "$ORIGEM/global/.forja/scripts" "$DESTINO/.forja/scripts"
+  colocar "$ORIGEM/global/.forja/padroes" "$DESTINO/.forja/padroes"
+  colocar "$ORIGEM/acervo" "$DESTINO/.forja/acervo"
   cp "$ORIGEM/instalar.sh" "$DESTINO/.forja/instalar.sh"
   cp "$ORIGEM/VERSAO" "$DESTINO/.forja/VERSAO"
 
   info "kit $(cat "$ORIGEM/VERSAO") instalado em $DESTINO ($modo)"
-  info "agentes: $(ls "$DESTINO/agents" | grep -c '^forja-'), skills: $(ls "$DESTINO/skills" | grep -c '^forja'), templates: $(ls "$DESTINO/.forja/templates" | grep -vc '^INDICE.md$')"
+  info "acervo: $(find "$DESTINO/.forja/acervo/" -name item.json | wc -l | tr -d ' ') item(ns); comece com: claude --agent hefesto"
+  info "agentes: $(ls "$DESTINO/agents" | grep -c '^forja-\|^hefesto.md$'), skills: $(ls "$DESTINO/skills" | grep -c '^forja'), templates: $(ls "$DESTINO/.forja/templates" | grep -vc '^INDICE.md$')"
 }
 
 ligar_projeto() {
@@ -81,7 +84,7 @@ ligar_projeto() {
 }
 
 desinstalar() {
-  rm -rf "$DESTINO"/agents/forja-*.md "$DESTINO"/skills/forja "$DESTINO"/skills/forja-* "$DESTINO/.forja"
+  rm -rf "$DESTINO"/agents/hefesto.md "$DESTINO"/agents/forja-*.md "$DESTINO"/skills/forja "$DESTINO"/skills/forja-* "$DESTINO/.forja"
   info "kit removido de $DESTINO"
 }
 
