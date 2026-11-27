@@ -68,7 +68,10 @@ def verificar_templates() -> set[str]:
         erro(f"template fora do INDICE.md: {nome}")
     for nome in existentes:
         texto = (pasta / nome).read_text(encoding="utf-8")
-        if nome.endswith(".feature"):
+        if nome.endswith(".html"):
+            if not texto.lower().startswith("<!doctype html>"):
+                erro(f"{nome}: template HTML deve começar com '<!doctype html>'")
+        elif nome.endswith(".feature"):
             if not texto.startswith("# language: pt"):
                 erro(f"{nome}: .feature deve começar com '# language: pt'")
         elif not texto.startswith("# "):
@@ -88,16 +91,16 @@ def verificar_referencias(agentes: set[str], skills: set[str], templates: set[st
     fontes = list((GLOBAL / "agentes").glob("*.md")) + list((GLOBAL / "skills").glob("*/SKILL.md"))
     for arq in fontes:
         texto = arq.read_text(encoding="utf-8")
-        for ref in re.findall(r"\.forja/templates/([\w.-]+\.(?:md|feature))", texto):
+        for ref in re.findall(r"\.forja/templates/([\w.-]+\.(?:md|feature|html))", texto):
             if ref not in templates and ref != "INDICE.md":
                 erro(f"{arq.relative_to(RAIZ)}: template inexistente {ref}")
-        for ref in re.findall(r"template `([\w.-]+\.(?:md|feature))`", texto):
+        for ref in re.findall(r"template `([\w.-]+\.(?:md|feature|html))`", texto):
             if ref not in templates:
                 erro(f"{arq.relative_to(RAIZ)}: template inexistente {ref}")
         for ref in re.findall(r"agente `(forja-[a-z-]+)`", texto):
             if ref not in agentes:
                 erro(f"{arq.relative_to(RAIZ)}: agente inexistente {ref}")
-        for ref in re.findall(r"skill `(forja-[a-z-]+)`", texto):
+        for ref in re.findall(r"skill `(forja(?:-[a-z-]+)?)`", texto):
             if ref not in skills:
                 erro(f"{arq.relative_to(RAIZ)}: skill inexistente {ref}")
 
@@ -112,7 +115,7 @@ def verificar_guias(templates: set[str], agentes: set[str], skills: set[str]) ->
         texto = (pasta / nome).read_text(encoding="utf-8")
         if "## Checklist de qualidade" not in texto:
             erro(f"guia {nome}: falta '## Checklist de qualidade'")
-        for ref in re.findall(r"template `([\w.-]+\.(?:md|feature))`", texto):
+        for ref in re.findall(r"template `([\w.-]+\.(?:md|feature|html))`", texto):
             if ref not in templates:
                 erro(f"guia {nome}: template inexistente {ref}")
         for ref in re.findall(r"`(forja-[a-z-]+)`", texto):

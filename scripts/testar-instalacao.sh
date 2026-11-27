@@ -14,6 +14,7 @@ for modo in "" --link; do
   [ -f "$CLAUDE_HOME/.forja/HEFESTO.md" ] || falha "HEFESTO.md ausente ($modo)"
   [ -f "$CLAUDE_HOME/agents/forja-dev.md" ] || falha "agente ausente ($modo)"
   [ -f "$CLAUDE_HOME/skills/forja-iniciar/SKILL.md" ] || falha "skill ausente ($modo)"
+  [ -f "$CLAUDE_HOME/skills/forja/SKILL.md" ] || falha "orquestrador ausente ($modo)"
   [ -f "$CLAUDE_HOME/.forja/templates/status.md" ] || falha "templates ausentes ($modo)"
   [ -x "$CLAUDE_HOME/.forja/instalar.sh" ] || falha "instalador não copiado ($modo)"
   [ -f "$CLAUDE_HOME/.forja/guias/d1-alinhamento.md" ] || falha "guias ausentes ($modo)"
@@ -39,5 +40,6 @@ mkdir "$TMP/semgit"
 
 "$RAIZ/instalar.sh" --desinstalar >/dev/null
 [ -e "$CLAUDE_HOME/.forja" ] && falha "desinstalar deixou .forja"
+[ -e "$CLAUDE_HOME/skills/forja" ] && falha "desinstalar deixou o orquestrador"
 [ -f "$CLAUDE_HOME/agents/meu-agente.md" ] || falha "desinstalar removeu agente alheio"
 echo "ok: instalação, ligação de projeto e desinstalação"

@@ -11,6 +11,13 @@ Portal de Cursos: portal para alunos se inscreverem em cursos livres de uma esco
 - Pasta de artefatos: `forja/`
 - Repositório: <link>
 
+## Condução
+- Modo de condução: `descoberta-completa`
+  <!-- descoberta-completa: todo o escopo passa por especificação e protótipo (D7 a D9) e pelo Portão 1 do conjunto antes de qualquer desenvolvimento. incremental: cada feature segue para o desenvolvimento assim que passa no próprio Portão 1. -->
+- Escopo da descoberta: todas as histórias Must
+- Protótipo: HTML em `forja/prototipo/` (Figma: não)
+- Ponto de entrada: `/forja`
+
 ## Papéis
 | Papel | Pessoa |
 |---|---|

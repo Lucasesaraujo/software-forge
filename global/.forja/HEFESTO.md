@@ -1,4 +1,4 @@
-# HEFESTO: o método da Forja (v2.1, kit 0.2)
+# HEFESTO: o método da Forja (v2.1, kit 0.3)
 
 Este arquivo é importado pelo `CLAUDE.local.md` de cada projeto (`@.forja/HEFESTO.md`). Ele diz como trabalhar; o contexto do projeto (papéis, ADRs, roadmap, onde ficam os artefatos) vem do próprio `CLAUDE.local.md`.
 
@@ -11,6 +11,14 @@ Este arquivo é importado pelo `CLAUDE.local.md` de cada projeto (`@.forja/HEFES
 5. **Tudo rastreável.** Requisito (RF/RNF/RN) → história → critério de aceite → teste → código → evidência de homologação. Use os identificadores em todos os artefatos.
 6. **O estado mora no `status.md`.** O produto (`forja/produto/status.md`) e cada feature têm um `status.md` com estado e sub-etapa atuais e o histórico de transições. Atualize-o a cada mudança.
 7. **O processo aprende.** Cada etapa deixa ao menos uma observação no registro de melhoria; cada ciclo termina numa retrospectiva baseada nesses dados. O que é do método volta para a Forja como proposta anonimizada.
+
+## Orquestração e modos de condução
+
+- **Ponto de entrada**: a skill `forja` (`/forja`). Ela lê o estado, diz onde estamos, propõe o próximo passo e aciona o agente certo; também roteia pedidos livres. Só a sessão principal aciona agentes, por isso a orquestração é uma skill e não um agente.
+- **Modo de condução** (no `CLAUDE.local.md`):
+  - `descoberta-completa`: depois do Portão 0, todo o escopo da descoberta (por padrão, as histórias Must) passa por D7 a D9, com protótipo e revisões, e pelo **Portão 1 do conjunto**. Só então começam a DV1 e a DV2. Nenhum código de produção antes disso.
+  - `incremental`: cada feature segue para a DV2 assim que passa no próprio Portão 1.
+  - Sem indicação, vale `incremental`.
 
 ## Onde ficam os artefatos
 
@@ -32,7 +40,13 @@ forja/
     05-requisitos.md
     06-backlog.md
     glossario.md
+    rastreabilidade.md     objetivo → requisito → história → cenário → tela
     portao-0.md
+    portao-1-conjunto.md   só no modo descoberta-completa
+  prototipo/               D8 (produto inteiro)
+    design-base.md
+    index.html             mapa navegável das telas
+    F-<nn>-<slug>/*.html
   arquitetura/             DV1 e ADRs
     01-arquitetura.md
     adr/ADR-0001-*.md
@@ -45,6 +59,8 @@ forja/
     07-<slug>.feature
     08-prototipo.md
     09-spec.md
+    revisao-design.md
+    revisao-spec.md
     portao-1.md
     dv2-plano.md
     dv3-contratos.md
@@ -78,7 +94,7 @@ Cada etapa da descoberta tem um **guia de condução** em `.forja/guias/` (`d1-a
 | D2 pesquisa com usuários | Entender quem usa e o que precisa | `produto/02-roteiro-entrevista.md`, `pesquisa/E-xx.md`, `02-pesquisa.md` | Personas e dores com evidência; suposições da D1 revisitadas |
 | D3 sistema atual e normas | O que existe hoje, integrações, leis e normas aplicáveis | `produto/03-sistema-atual.md` | Inventário e restrições normativas (ex.: LGPD) |
 | D4 processos AS-IS e TO-BE | Como é e como será | `produto/04-processos.md` | Fluxos atual e futuro, com ganhos |
-| D5 requisitos | RF, RNF e RN com prioridade MoSCoW | `produto/05-requisitos.md`, `glossario.md` | Requisitos identificados (RF-01, RNF-01, RN-01) |
+| D5 requisitos | RF, RNF e RN com prioridade MoSCoW, rastreáveis | `produto/05-requisitos.md`, `glossario.md`, `rastreabilidade.md` | Requisitos identificados (RF-01, RNF-01, RN-01) |
 | D6 épicos, histórias e backlog | Quebrar em entregas | `produto/06-backlog.md` | Backlog priorizado. **Portão 0** |
 
 ### Descoberta (por feature: D7 a D9)
@@ -86,8 +102,8 @@ Cada etapa da descoberta tem um **guia de condução** em `.forja/guias/` (`d1-a
 | Etapa | Objetivo | Artefato | Saída mínima |
 |---|---|---|---|
 | D7 critérios de aceite e Gherkin | Definir "pronto" do ponto de vista do usuário | `07-criterios.md`, `07-<slug>.feature` | Cenários Gherkin cobrindo caminho feliz, erros e regras de negócio |
-| D8 prototipação e UX | Telas e fluxos | `08-prototipo.md` | Fluxo, estados de tela, acessibilidade |
-| D9 spec consolidada | Uma fonte única para desenvolver | `09-spec.md` | Spec revisada. **Portão 1** |
+| D8 prototipação e UX | Telas e fluxos | `08-prototipo.md`, telas em `prototipo/`, `revisao-design.md` | Protótipo navegável com todos os estados, revisado |
+| D9 spec consolidada | Uma fonte única para desenvolver | `09-spec.md`, `revisao-spec.md` | Spec revisada sem bloqueantes. **Portão 1** |
 
 ### Desenvolvimento (DV1 a DV7)
 
@@ -118,12 +134,13 @@ Cada etapa da descoberta tem um **guia de condução** em `.forja/guias/` (`d1-a
 | Portão | Etapa | O que valida | Responsáveis |
 |---|---|---|---|
 | 0 | D6 | Produto: problema, requisitos e backlog fazem sentido para o cliente | Coordenação e gerente, com o cliente |
-| 1 | D9 | Spec da feature: completa, testável, prototipada | Líder de design e gerente |
+| 1 | D9 | Spec da feature: completa, testável, prototipada, revisada | Líder de design e gerente |
+| 1c | fim da D9 do conjunto | Conjunto (modo descoberta-completa): todo o escopo especificado e prototipado, consistente entre features | Líder de design e gerente (recomendado com o cliente) |
 | 2 | DV6 | Código: DoD atendida, revisado por outro dev | Líder técnico ou dev designado, com revisão de outro dev |
 | 3 | DU5 | Entrega: cliente aceitou | Líder técnico e gerente, após aceite do cliente |
 
 Regras:
-- Um portão só é aprovado com o registro no arquivo `portao-N.md` (ou `dv6-revisao.md` e `du5-homologacao.md`): decisão, data, papel e nome de quem aprovou.
+- Um portão só é aprovado com o registro no arquivo `portao-N.md` (`portao-1-conjunto.md` para o 1c) (ou `dv6-revisao.md` e `du5-homologacao.md`): decisão, data, papel e nome de quem aprovou.
 - Reprovado volta para a etapa indicada no registro, e o `status.md` registra o retorno.
 - O agente `forja-portao` checa os critérios e prepara o parecer; não aprova.
 
@@ -135,7 +152,9 @@ Regras:
 
 ## Estados do produto
 
-O `forja/produto/status.md` usa os estados `descoberta` (D1 a D6), `validado` (Portão 0 aprovado; as features seguem pelos próprios `status.md`) e `bloqueado`. As sub-etapas e as regras de transição são as mesmas das features.
+O `forja/produto/status.md` usa os estados `descoberta` (D1 a D6) e `bloqueado`, e depois:
+- modo `incremental`: `validado` (Portão 0 aprovado; as features seguem pelos próprios `status.md`);
+- modo `descoberta-completa`: `em-especificacao` (Portão 0 aprovado, features do escopo em D7 a D9), `especificado` (Portão 1 do conjunto aprovado) e `em-desenvolvimento`. As sub-etapas e as regras de transição são as mesmas das features.
 
 ## Estados da feature
 
@@ -145,7 +164,7 @@ Cada estado corresponde a uma faixa de sub-etapas. O `status.md` registra o esta
 |---|---|---|
 | `rascunho` | D7, D8 | A feature sai do backlog aprovado no Portão 0 |
 | `em-spec` | D9 | Critérios e protótipo prontos |
-| `pronta` | DV2 | Portão 1 aprovado |
+| `pronta` | DV2 | Portão 1 aprovado (no modo descoberta-completa, fica aqui até o Portão 1 do conjunto) |
 | `em-desenvolvimento` | DV3, DV4, DV5 | DoR confirmada na DV2 |
 | `em-revisao` | DV6 | Testes verdes, PR aberto |
 | `em-integracao` | DV7 | Portão 2 aprovado |
@@ -171,7 +190,11 @@ Transições válidas: sempre para a sub-etapa seguinte, para `bloqueada` (e de 
 | `forja-analista` | D1 a D6 (coordena a descoberta e é dono dos artefatos) |
 | `forja-facilitador` | Reuniões da descoberta: kickoff, oficinas, validações; pauta e ata |
 | `forja-pesquisador` | D2: roteiro, entrevistas, síntese |
-| `forja-especificador` | D7 a D9 |
+| `forja-requisitos` | D5, glossário, rastreabilidade e mudanças de requisito |
+| `forja-especificador` | D7 e D9 (coordena a feature na descoberta) |
+| `forja-prototipador` | D8: base de design e protótipos HTML navegáveis |
+| `forja-revisor-design` | Revisão de protótipos (D8, antes do Portão 1) |
+| `forja-revisor-spec` | Revisão de critérios, Gherkin e spec (D9, antes do Portão 1) |
 | `forja-arquiteto` | DV1 a DV3 |
 | `forja-dev` | DV4 e DV5 |
 | `forja-revisor` | DV6 |
@@ -181,11 +204,12 @@ Transições válidas: sempre para a sub-etapa seguinte, para `bloqueada` (e de 
 
 | Skill | Para quê |
 |---|---|
+| `forja` | Orquestrar: onde estamos, próximo passo, acionar o agente certo |
 | `forja-iniciar` | Criar a estrutura `forja/`, acordos e o `CLAUDE.local.md` do projeto |
 | `forja-feature` | Abrir uma feature nova a partir de uma história do backlog |
 | `forja-status` | Mostrar onde cada feature está e o que falta |
 | `forja-avancar` | Levar uma feature para a próxima sub-etapa, checando a saída mínima |
-| `forja-portao` | Preparar o parecer de um portão e registrar a decisão humana |
+| `forja-portao` | Preparar o parecer de um portão (0, 1, 1c, 2, 3) e registrar a decisão humana |
 | `forja-registrar-reuniao` | Levar ata, notas ou transcrição de uma reunião ou entrevista para os artefatos |
 | `forja-observar` | Registrar uma observação de processo no registro de melhoria |
 | `forja-retro` | Retrospectiva de iteração, fase, feature ou portão, com métricas |
@@ -208,7 +232,7 @@ Regras: o registro só cresce (nunca apague linhas; marque "Tratada em"); observ
 
 - Antes de trabalhar numa feature, leia o `status.md` dela e diga em que estado e sub-etapa está.
 - Não produza artefato de uma etapa posterior à sub-etapa atual sem avisar que isso é antecipar trabalho.
-- Não escreva código de produção para feature que não esteja em `em-desenvolvimento` ou depois.
+- Não escreva código de produção para feature que não esteja em `em-desenvolvimento` ou depois. No modo `descoberta-completa`, nada de DV1 em diante antes do Portão 1 do conjunto.
 - Na DV5, nunca pule, desative ou apague testes para ficar verde.
 - Ao terminar uma etapa, atualize o `status.md` (estado, sub-etapa e linha no histórico) e registre ao menos uma observação no registro de melhoria.
 - Antes de começar uma etapa, leia o registro de melhoria e a última retro, e aplique as ações e os acertos que valem para ela.

@@ -1,7 +1,7 @@
 ---
 name: forja-portao
-description: Conduz um portão da Forja (0, 1, 2 ou 3) - aciona o agente forja-portao para o parecer com evidências e, quando a pessoa informar a decisão do papel responsável, registra aprovação ou reprovação no arquivo do portão e no status.md. Use quando um portão estiver para ser decidido.
-argument-hint: "<0|1|2|3> [F-nn] [aprovado|reprovado por <nome>]"
+description: Conduz um portão da Forja (0, 1, 1c do conjunto, 2 ou 3) - aciona o agente forja-portao para o parecer com evidências e, quando a pessoa informar a decisão do papel responsável, registra aprovação ou reprovação no arquivo do portão e no status.md. Use quando um portão estiver para ser decidido.
+argument-hint: "<0|1|1c|2|3> [F-nn] [aprovado|reprovado por <nome>]"
 ---
 
 # Conduzir um portão
@@ -13,6 +13,7 @@ Argumentos: `$ARGUMENTS`.
 3. Garanta que o arquivo do portão existe (crie do template se não existir):
    - 0: `forja/produto/portao-0.md` (template `portao-0.md`)
    - 1: `forja/features/<F>/portao-1.md` (template `portao-1.md`)
+   - 1c: `forja/produto/portao-1-conjunto.md` (template `portao-1-conjunto.md`)
    - 2: `forja/features/<F>/dv6-revisao.md` (template `dv6-revisao.md`)
    - 3: `forja/features/<F>/du5-homologacao.md` (template `du5-homologacao.md`)
    Cole o parecer na seção "Parecer da checagem".
@@ -20,7 +21,8 @@ Argumentos: `$ARGUMENTS`.
 5. Atualize o `status.md` da feature (portões 1 a 3):
    - aprovado: avance para o estado seguinte ao portão;
    - reprovado: volte para a sub-etapa indicada na decisão, com o motivo no histórico.
-   No Portão 0, atualize `forja/produto/status.md` do mesmo jeito.
+   No Portão 0, atualize `forja/produto/status.md` do mesmo jeito (no modo descoberta completa, aprovado leva o produto a `em-especificacao`).
+   No Portão 1c aprovado, o produto vai para `especificado` e as features do conjunto ficam liberadas para a DV2; reprovado lista as features que voltam e para qual sub-etapa.
 6. Registre a decisão no `forja/melhoria/registro.md` com a skill `forja-observar`: reprovação é `retorno` (impacto `A`), com o motivo; aprovação com condições é `atrito`; aprovação limpa pode ser `acerto`.
 7. Depois de qualquer decisão, sugira a skill `forja-retro` com o escopo do portão (no Portão 0, escopo `descoberta`).
 8. Sem decisão, termine dizendo quem precisa decidir e o que o parecer recomenda.

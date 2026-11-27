@@ -1,0 +1,84 @@
+<!doctype html>
+<!--
+  Base para os protótipos da Forja. Copie para forja/prototipo/index.html (mapa de telas)
+  e use como esqueleto de cada tela em forja/prototipo/<feature>/<tela>.html.
+  Sem dependências externas. Os tokens vêm de forja/prototipo/design-base.md.
+  Para alternar estados, use os botões da barra de estados (só no protótipo).
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detalhe da turma · Portal de Cursos (protótipo)</title>
+<style>
+  :root {
+    --cor-primaria: #1f5fbf; --cor-erro: #b3261e; --cor-sucesso: #1e7a3a;
+    --cor-texto: #1b1b1f; --cor-fundo: #ffffff; --cor-borda: #d0d4dc;
+    --fonte: system-ui, sans-serif; --espaco: 8px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--fonte); color: var(--cor-texto); background: var(--cor-fundo); line-height: 1.5; }
+  header { padding: calc(var(--espaco) * 2); border-bottom: 1px solid var(--cor-borda); display: flex; justify-content: space-between; }
+  main { max-width: 640px; margin: 0 auto; padding: calc(var(--espaco) * 2); }
+  a { color: var(--cor-primaria); }
+  :focus-visible { outline: 3px solid var(--cor-primaria); outline-offset: 2px; }
+  .card { border: 1px solid var(--cor-borda); border-radius: 8px; padding: calc(var(--espaco) * 2); }
+  .botao { min-height: 44px; padding: 0 calc(var(--espaco) * 3); border: 0; border-radius: 6px; background: var(--cor-primaria); color: #fff; font-size: 1rem; cursor: pointer; }
+  .botao[disabled] { opacity: .6; cursor: not-allowed; }
+  .mensagem { padding: calc(var(--espaco) * 1.5); border-radius: 6px; margin-top: calc(var(--espaco) * 2); }
+  .mensagem.sucesso { background: #e6f4ea; color: var(--cor-sucesso); }
+  .mensagem.erro { background: #fce8e6; color: var(--cor-erro); }
+  .estado { display: none; }
+  body[data-estado="normal"] .estado.normal,
+  body[data-estado="carregando"] .estado.carregando,
+  body[data-estado="sucesso"] .estado.sucesso,
+  body[data-estado="sem-vaga"] .estado.sem-vaga,
+  body[data-estado="erro"] .estado.erro { display: block; }
+  .prototipo { margin-top: calc(var(--espaco) * 4); padding: var(--espaco); border-top: 2px dashed var(--cor-borda); font-size: .875rem; }
+  .prototipo button { margin: 2px; }
+</style>
+</head>
+<body data-estado="normal">
+<header>
+  <strong>Portal de Cursos</strong>
+  <nav aria-label="Principal"><a href="../index.html">Mapa de telas</a> · <a href="#">Meus cursos</a></nav>
+</header>
+<main>
+  <h1>Python Básico 2027.1</h1>
+
+  <section class="card estado normal" data-cenario="Inscrição confirmada">
+    <p>Terças e quintas, 19h às 21h · <strong>1 vaga restante</strong></p>
+    <button class="botao" type="button">Inscrever-me</button>
+  </section>
+
+  <section class="card estado carregando" aria-busy="true">
+    <p>1 vaga restante</p>
+    <button class="botao" type="button" disabled>Inscrevendo...</button>
+  </section>
+
+  <div class="estado sucesso" data-cenario="Inscrição confirmada">
+    <p class="mensagem sucesso" role="status" aria-live="polite">Inscrição confirmada</p>
+  </div>
+
+  <div class="estado sem-vaga" data-cenario="Turma sem vaga">
+    <p class="mensagem erro" role="alert">Turma sem vagas</p>
+    <a href="#">Entrar na lista de espera</a>
+  </div>
+
+  <div class="estado erro">
+    <p class="mensagem erro" role="alert">Não foi possível carregar. <a href="#">Tentar de novo</a></p>
+  </div>
+
+  <aside class="prototipo" aria-label="Controles do protótipo">
+    <p><strong>Protótipo</strong> · Feature F-01 · Cenários: Inscrição confirmada, Turma sem vaga</p>
+    <p>Estados:
+      <button type="button" onclick="document.body.dataset.estado='normal'">normal</button>
+      <button type="button" onclick="document.body.dataset.estado='carregando'">carregando</button>
+      <button type="button" onclick="document.body.dataset.estado='sucesso'">sucesso</button>
+      <button type="button" onclick="document.body.dataset.estado='sem-vaga'">sem vaga (RN-02)</button>
+      <button type="button" onclick="document.body.dataset.estado='erro'">erro</button>
+    </p>
+  </aside>
+</main>
+</body>
+</html>
