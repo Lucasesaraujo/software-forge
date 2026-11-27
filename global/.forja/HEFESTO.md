@@ -1,0 +1,177 @@
+# HEFESTO: o método da Forja (v2.1)
+
+Este arquivo é importado pelo `CLAUDE.local.md` de cada projeto (`@.forja/HEFESTO.md`). Ele diz como trabalhar; o contexto do projeto (papéis, ADRs, roadmap, onde ficam os artefatos) vem do próprio `CLAUDE.local.md`.
+
+## Princípios
+
+1. **Spec antes de código.** Nenhuma linha de produção é escrita para uma feature que não passou pelo Portão 1.
+2. **Testes antes da implementação.** O Gherkin da D7 vira teste automatizado na DV4, antes da DV5.
+3. **Portões são decisões humanas.** Agentes preparam evidências e checam critérios; quem aprova é o papel responsável. Nunca marque um portão como aprovado sem o registro explícito da pessoa.
+4. **Papéis, não nomes.** O método fala em papéis. Quem ocupa cada papel está no `CLAUDE.local.md` do projeto.
+5. **Tudo rastreável.** Requisito (RF/RNF/RN) → história → critério de aceite → teste → código → evidência de homologação. Use os identificadores em todos os artefatos.
+6. **O estado mora no `status.md`.** Cada feature tem um `status.md` com estado e sub-etapa atuais e o histórico de transições. Atualize-o a cada mudança.
+
+## Onde ficam os artefatos
+
+Por padrão, em `forja/` na raiz do projeto (o `CLAUDE.local.md` pode mudar com `Pasta de artefatos:`):
+
+```
+forja/
+  produto/                 D1 a D6 (nível do produto)
+    01-alinhamento.md
+    02-pesquisa.md
+    03-sistema-atual.md
+    04-processos.md
+    05-requisitos.md
+    06-backlog.md
+    portao-0.md
+  arquitetura/             DV1 e ADRs
+    01-arquitetura.md
+    adr/ADR-0001-*.md
+  acordos/                 DoR e DoD
+    dor.md
+    dod.md
+  features/<id>-<slug>/    D7 a DU7 (por feature)
+    status.md
+    07-criterios.md
+    07-<slug>.feature
+    08-prototipo.md
+    09-spec.md
+    portao-1.md
+    dv2-plano.md
+    dv3-contratos.md
+    dv4-testes.md
+    dv6-revisao.md         (Portão 2)
+    dv7-integracao.md
+    du1-qualidade.md
+    du2-seguranca.md
+    du3-desempenho.md
+    du4-operacao.md
+    du5-homologacao.md     (Portão 3)
+    du6-producao.md
+    du7-aprendizado.md
+```
+
+Os templates de cada artefato ficam em `.forja/templates/` (ver `.forja/templates/INDICE.md`). Copie o template, troque o exemplo do Portal de Cursos pelo conteúdo real e remova as instruções entre `<!-- -->`.
+
+## Fases e etapas
+
+### Descoberta (nível do produto: D1 a D6)
+
+| Etapa | Objetivo | Artefato | Saída mínima |
+|---|---|---|---|
+| D1 alinhamento e escopo | Problema, objetivos, partes interessadas, limites do escopo | `produto/01-alinhamento.md` | Objetivos mensuráveis e o que está fora do escopo |
+| D2 pesquisa com usuários | Entender quem usa e o que precisa | `produto/02-pesquisa.md` | Personas e dores com evidência |
+| D3 sistema atual e normas | O que existe hoje, integrações, leis e normas aplicáveis | `produto/03-sistema-atual.md` | Inventário e restrições normativas (ex.: LGPD) |
+| D4 processos AS-IS e TO-BE | Como é e como será | `produto/04-processos.md` | Fluxos atual e futuro, com ganhos |
+| D5 requisitos | RF, RNF e RN com prioridade MoSCoW | `produto/05-requisitos.md` | Requisitos identificados (RF-01, RNF-01, RN-01) |
+| D6 épicos, histórias e backlog | Quebrar em entregas | `produto/06-backlog.md` | Backlog priorizado. **Portão 0** |
+
+### Descoberta (por feature: D7 a D9)
+
+| Etapa | Objetivo | Artefato | Saída mínima |
+|---|---|---|---|
+| D7 critérios de aceite e Gherkin | Definir "pronto" do ponto de vista do usuário | `07-criterios.md`, `07-<slug>.feature` | Cenários Gherkin cobrindo caminho feliz, erros e regras de negócio |
+| D8 prototipação e UX | Telas e fluxos | `08-prototipo.md` | Fluxo, estados de tela, acessibilidade |
+| D9 spec consolidada | Uma fonte única para desenvolver | `09-spec.md` | Spec revisada. **Portão 1** |
+
+### Desenvolvimento (DV1 a DV7)
+
+| Etapa | Objetivo | Artefato | Saída mínima |
+|---|---|---|---|
+| DV1 arquitetura e fundações | Decisões estruturais do produto (uma vez, revisitada quando preciso) | `arquitetura/01-arquitetura.md`, ADRs | Visão de componentes, stack, ADRs |
+| DV2 refinamento e planejamento | Checar a DoR e quebrar em tarefas | `dv2-plano.md` | DoR atendida e tarefas estimadas |
+| DV3 contratos e dados | APIs, eventos, modelo de dados | `dv3-contratos.md` | Contratos versionados e migrações planejadas |
+| DV4 testes primeiro | Automatizar o Gherkin e os testes de unidade antes do código | `dv4-testes.md` | Testes escritos e falhando pelo motivo certo |
+| DV5 implementação | Fazer os testes passarem | código | Testes verdes, sem pular nem desativar testes |
+| DV6 revisão de código | Revisão por outra pessoa contra a DoD | `dv6-revisao.md` | DoD atendida. **Portão 2** |
+| DV7 integração e homologação | Integrar e validar em ambiente de homologação | `dv7-integracao.md` | Feature integrada e cenários Gherkin passando em homologação |
+
+### Durabilidade (DU1 a DU7)
+
+| Etapa | Objetivo | Artefato | Saída mínima |
+|---|---|---|---|
+| DU1 qualidade | Cobertura, regressão, testes exploratórios | `du1-qualidade.md` | Relatório de qualidade |
+| DU2 segurança e privacidade | Ameaças, dados pessoais, dependências | `du2-seguranca.md` | Riscos tratados ou aceitos por quem pode aceitar |
+| DU3 desempenho | Metas de RNF medidas | `du3-desempenho.md` | Medições contra as metas |
+| DU4 observabilidade e operação | Logs, métricas, alertas, runbook | `du4-operacao.md` | Runbook e alertas configurados |
+| DU5 homologação com o cliente | Cliente valida usando os cenários Gherkin | `du5-homologacao.md` | Aceite registrado. **Portão 3** |
+| DU6 produção | Implantar com plano de retorno | `du6-producao.md` | Implantação registrada |
+| DU7 aprendizado | Medir resultado e retrospectiva | `du7-aprendizado.md` | Lições e ajustes no método ou no backlog |
+
+## Portões
+
+| Portão | Etapa | O que valida | Responsáveis |
+|---|---|---|---|
+| 0 | D6 | Produto: problema, requisitos e backlog fazem sentido para o cliente | Coordenação e gerente, com o cliente |
+| 1 | D9 | Spec da feature: completa, testável, prototipada | Líder de design e gerente |
+| 2 | DV6 | Código: DoD atendida, revisado por outro dev | Líder técnico ou dev designado, com revisão de outro dev |
+| 3 | DU5 | Entrega: cliente aceitou | Líder técnico e gerente, após aceite do cliente |
+
+Regras:
+- Um portão só é aprovado com o registro no arquivo `portao-N.md` (ou `dv6-revisao.md` e `du5-homologacao.md`): decisão, data, papel e nome de quem aprovou.
+- Reprovado volta para a etapa indicada no registro, e o `status.md` registra o retorno.
+- O agente `forja-portao` checa os critérios e prepara o parecer; não aprova.
+
+## Acordos da equipe
+
+- **Definition of Ready (DoR)**: checada no Portão 1 e de novo na DV2. Feature sem DoR não entra em desenvolvimento.
+- **Definition of Done (DoD)**: checada no Portão 2.
+- Os textos ficam em `forja/acordos/dor.md` e `forja/acordos/dod.md` (templates `acordo-dor.md` e `acordo-dod.md`). A equipe pode ajustar; o método exige que existam.
+
+## Estados da feature
+
+Cada estado corresponde a uma faixa de sub-etapas. O `status.md` registra o estado **e** a sub-etapa.
+
+| Estado | Sub-etapas | Entra quando |
+|---|---|---|
+| `rascunho` | D7, D8 | A feature sai do backlog aprovado no Portão 0 |
+| `em-spec` | D9 | Critérios e protótipo prontos |
+| `pronta` | DV2 | Portão 1 aprovado |
+| `em-desenvolvimento` | DV3, DV4, DV5 | DoR confirmada na DV2 |
+| `em-revisao` | DV6 | Testes verdes, PR aberto |
+| `em-integracao` | DV7 | Portão 2 aprovado |
+| `em-durabilidade` | DU1, DU2, DU3, DU4 | Integrada em homologação |
+| `em-homologacao` | DU5 | Relatórios DU1 a DU4 concluídos |
+| `aceita` | DU6 | Portão 3 aprovado |
+| `em-producao` | DU7 | Implantada |
+| `concluida` | (fim) | Aprendizado registrado |
+| `bloqueada` | (qualquer) | Impedimento registrado; guarda a sub-etapa onde parou |
+
+Transições válidas: sempre para a sub-etapa seguinte, para `bloqueada` (e de volta para onde parou) ou para trás quando um portão reprova. Pular sub-etapa exige justificativa registrada no histórico do `status.md`.
+
+## Gherkin como ponte
+
+1. **D7**: escrito em português (`# language: pt`), com `Funcionalidade`, `Cenário`, `Dado`, `Quando`, `Então`. Cada cenário referencia a história e as regras (`@HU-03 @RN-02`).
+2. **DV4**: os mesmos cenários são automatizados sem alterar o texto acordado. Se o texto precisar mudar, volta para a D7 e reabre o Portão 1.
+3. **DU5**: o cliente homologa executando ou acompanhando os mesmos cenários.
+
+## Agentes e skills
+
+| Agente | Etapas |
+|---|---|
+| `forja-analista` | D1 a D6 |
+| `forja-especificador` | D7 a D9 |
+| `forja-arquiteto` | DV1 a DV3 |
+| `forja-dev` | DV4 e DV5 |
+| `forja-revisor` | DV6 |
+| `forja-durabilidade` | DV7, DU1 a DU4, DU6 e DU7 |
+| `forja-portao` | Checagem dos portões 0 a 3 (somente leitura) |
+
+| Skill | Para quê |
+|---|---|
+| `forja-iniciar` | Criar a estrutura `forja/`, acordos e o `CLAUDE.local.md` do projeto |
+| `forja-feature` | Abrir uma feature nova a partir de uma história do backlog |
+| `forja-status` | Mostrar onde cada feature está e o que falta |
+| `forja-avancar` | Levar uma feature para a próxima sub-etapa, checando a saída mínima |
+| `forja-portao` | Preparar o parecer de um portão e registrar a decisão humana |
+
+## Regras de conduta para o Claude
+
+- Antes de trabalhar numa feature, leia o `status.md` dela e diga em que estado e sub-etapa está.
+- Não produza artefato de uma etapa posterior à sub-etapa atual sem avisar que isso é antecipar trabalho.
+- Não escreva código de produção para feature que não esteja em `em-desenvolvimento` ou depois.
+- Na DV5, nunca pule, desative ou apague testes para ficar verde.
+- Ao terminar uma etapa, atualize o `status.md` (estado, sub-etapa e linha no histórico).
+- Use os nomes dos papéis; consulte o `CLAUDE.local.md` para saber quem ocupa cada papel.
+- Nada do projeto volta para o repositório da Forja. Melhorias no método são propostas na DU7 e registradas em `docs/` da Forja.
