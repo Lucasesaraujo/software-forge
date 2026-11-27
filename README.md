@@ -1,28 +1,29 @@
-# Forja de Software
+# Forja de Sistemas Agênticos
 
-Método de desenvolvimento apoiado por agentes, seguindo Spec-Driven Development (SDD).
+Fábrica de sistemas agênticos para desenvolvimento de software, seguindo Spec-Driven Development (SDD).
 
-A Forja é genérica: método, agentes, skills, templates e o roadmap de construção da própria Forja. Nada aqui cita um projeto específico. O contexto de cada projeto (papéis, ADRs, roadmap) fica fora deste repositório.
+A Forja guarda a parte **coringa**, que entra em todo projeto, e o processo para adaptá-la. De cada projeto real se forja um sistema agêntico próprio (agentes, skills, método e contexto do projeto), que vive fora deste repositório. Veja [docs/visao.md](docs/visao.md).
 
 ## Estrutura
 
 ```
-docs/            Documentação do método e registro de decisões
-global/          Kit instalado em ~/.claude de cada pessoa
-  agentes/       Definições de agentes
-  skills/        Skills
-  templates/     Templates de artefatos (exemplo neutro: Portal de Cursos)
-  .forja/        HEFESTO.md, o método importado pelos projetos
+nucleo/      O que é coringa: método, agentes, skills e templates base
+moldes/      O que cada projeto preenche ou estende
+forjar/      Como montar o sistema agêntico de um projeto
+exemplos/    Instâncias de projetos fictícios (Portal de Cursos)
+docs/        Visão, método e decisões (ADRs)
 ```
 
-Cada projeto usa a Forja localmente com um `CLAUDE.local.md` que importa o método com `@.forja/HEFESTO.md`, ignorado via `.git/info/exclude` no repositório do projeto.
+## O método
 
-## Visão geral do método
-
-Três fases e quatro portões:
+O processo padrão do núcleo tem três fases e quatro portões:
 
 - **Descoberta (D1 a D9)**: do alinhamento de escopo à spec consolidada. Portão 0 (validação do produto) na D6 e Portão 1 (spec) na D9.
 - **Desenvolvimento (DV1 a DV7)**: da arquitetura à integração. Portão 2 (código) na DV6.
 - **Durabilidade (DU1 a DU7)**: qualidade, segurança, operação e entrega. Portão 3 (entrega) na DU5.
 
 Detalhes em [docs/metodo-v2.1.md](docs/metodo-v2.1.md).
+
+## Decisões
+
+- [ADR 0001](docs/decisoes/0001-forja-de-sistemas-agenticos.md): a Forja passa a ser uma forja de sistemas agênticos.
